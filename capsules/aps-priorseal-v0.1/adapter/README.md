@@ -17,14 +17,6 @@ The output is per-claim. It separates `ESTABLISHED`, `CONTRADICTED`, and `NOT_ES
 
 ## Run
 
-```bash
-cd tools/aps-priorseal-showcase
-npm ci
-node verify.mjs \
-  --aps-owner /path/to/agent-passport-system/fixtures/priorseal-decision-binding \
-  --aps /path/to/PriorSeal/examples/aps-priorseal-decision-binding-v1/aps-inputs \
-  --priorseal /path/to/PriorSeal/examples/aps-priorseal-decision-binding-v1 \
-  --out frequency-run-report.json
-```
+Use the capsule-level [RUN.md](../RUN.md) and `run-pinned.sh` for scope review or any later formal run. The wrapper verifies the exact review commit, the pinned APS and PriorSeal commits, the capsule manifest, and the adapter digest; it requires a fresh attempt directory and records the exit status so stale output cannot be mistaken for a new result.
 
 The output contract is intentionally narrow. It exposes public evidence pins, claim identifiers, evidence references, results, claim ceilings and the future adequacy plan. Frequency internal reasoning graphs, heuristics, repair ranking, orchestration and private assurance controls are not part of the adapter contract.

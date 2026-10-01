@@ -1,4 +1,4 @@
-# Revision 0.1.1 validation
+# Revision 0.1.2 validation
 
 This document records publication-gate checks for the review capsule. It is not a formal federation pilot result.
 
@@ -24,6 +24,13 @@ At the pinned commits:
 - one-byte copied-fixture mutation: FAIL CLOSED
 - report emitted after tamper: NO
 - missing `--aps-owner`: rejected with usage error
+- APS trust-key provenance disclosed as pinned fixture test keys: PASS
+- APS authenticity claims carry a fixture-test-key claim ceiling: PASS
+- existing output destination: rejected before evaluation
+- stale sentinel at existing output path: preserved byte-for-byte after rejection
+- fresh-attempt wrapper records exact review commit, adapter SHA-256, APS/PriorSeal commits, and exit status
+- reviewed adapter commit pinned for reproduction: `bf1838c2936dabefc28c116ab7bfd106f572af88`
+- capsule manifest verification is on the pinned-run execution path
 - mutation/corpus adequacy: NOT RUN and excluded from the formal result
 - formal pilot run: NOT RUN
 - formal result publication: HOLD
