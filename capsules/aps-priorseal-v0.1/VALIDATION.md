@@ -29,6 +29,7 @@ At the pinned commits:
 - existing output destination: rejected before evaluation
 - stale sentinel at existing output path: preserved byte-for-byte after rejection
 - fresh-attempt wrapper records exact review commit, adapter SHA-256, APS/PriorSeal commits, and exit status
+- reviewed adapter commit pinned for reproduction: `bf1838c2936dabefc28c116ab7bfd106f572af88`
 - capsule manifest verification is on the pinned-run execution path
 - mutation/corpus adequacy: NOT RUN and excluded from the formal result
 - formal pilot run: NOT RUN
