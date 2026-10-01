@@ -1,0 +1,44 @@
+{
+  "schema": "frequency.federation.attribution-receipt/v0.1",
+  "status": "PROPOSAL",
+  "receipt_id": "sha256:4bfe807eef39a188412f6e0c670fbbb56a382af65263a5e843d1114a0de53c70",
+  "action_ref": "urn:example:action:001",
+  "workflow_ref": "urn:example:workflow:bounded-pilot",
+  "components": [
+    {
+      "project_id": "example-authority",
+      "artifact_ref": "git:example/authority@abc123",
+      "artifact_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "role": "authority",
+      "evidence_refs": [
+        "urn:evidence:decision:001"
+      ],
+      "attestation": {
+        "status": "VERIFIED",
+        "attester_ref": "did:example:authority",
+        "statement_ref": "urn:statement:authority:001",
+        "verification_evidence_ref": "urn:evidence:signature:001"
+      }
+    },
+    {
+      "project_id": "example-verifier",
+      "artifact_ref": "git:example/verifier@def456",
+      "artifact_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "role": "verification",
+      "evidence_refs": [
+        "urn:evidence:verification:001"
+      ],
+      "attestation": {
+        "status": "UNVERIFIED",
+        "attester_ref": "did:example:runner",
+        "statement_ref": "urn:statement:verification:001"
+      }
+    }
+  ],
+  "claim_ceiling": {
+    "economic.value": "NOT_ESTABLISHED",
+    "payment.entitlement": "NOT_ESTABLISHED",
+    "causal.importance": "NOT_ESTABLISHED",
+    "external.execution.occurred": "NOT_ESTABLISHED"
+  }
+}
