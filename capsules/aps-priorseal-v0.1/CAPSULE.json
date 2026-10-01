@@ -1,0 +1,69 @@
+{
+  "schema": "frequency.federation-review-capsule/v0.1",
+  "capsule_id": "aps-priorseal-v0.1",
+  "status": "SCOPE_REVIEW_READY",
+  "formal_run_status": "NOT_RUN_PENDING_SCOPE_CONFIRMATION",
+  "publication_status": "HOLD_PENDING_SEPARATE_AGREEMENT",
+  "private_origin": {
+    "repository": "altrudev/Frequency",
+    "review_branch_commit": "a0160e9322af25474aa50819e69e83b80f6dd3a2",
+    "private_repository_disclosed": false
+  },
+  "public_inputs": {
+    "aps_repository": "aeoess/agent-passport-system",
+    "aps_commit": "948f99b85343bef2c6fa677c8543965caacfc087",
+    "priorseal_repository": "imokokok/PriorSeal",
+    "priorseal_commit": "d749d2691c3e6be139de4020e7b27cdafca2c428",
+    "reference_time": "2026-09-19T10:05:00.000Z",
+    "aps_manifest_sha256": "2bf365bc9124ecfc943d5be86c34e8e0cacd51a5929b8d0c906e633a017231f9",
+    "within_limit_sha256": "c8dd05f412b3d1dd957f66deaf231a8becb9656e8bd1960ba88638cf9ad4c6da",
+    "over_limit_sha256": "cb45a8378a5c9f1f7f2695c4d1fb5cbe344d9c840b799cf0ecb786e5ddf3c226",
+    "producer_report_sha256": "d2c1bea5f0acf0afe06c944376c5a471402ab5d48bf85ca267ed9b5876336ae4"
+  },
+  "execution": {
+    "network_during_verification": false,
+    "producer_verifier_code_imported": false,
+    "output_path": "artifacts/aps-priorseal-v0.1/frequency-run-report.json",
+    "command_document": "RUN.md"
+  },
+  "trust_configuration": "TRUST-PINS.json",
+  "output_contract": "OUTPUT-CONTRACT.md",
+  "expected_pre_scope_shape": {
+    "established": 13,
+    "contradicted": 3,
+    "not_established": 5,
+    "note": "Development preflight shape only. It is not the formal pilot result."
+  },
+  "claim_ceiling": {
+    "live_chain.execution_occurred": "NOT_ESTABLISHED",
+    "aps.decision.single_use": "NOT_ESTABLISHED",
+    "aps.live_currency_enforcement": "NOT_ESTABLISHED",
+    "observation.independent_external_witness": "NOT_ESTABLISHED",
+    "production.adoption": "NOT_ESTABLISHED"
+  },
+  "adequacy": {
+    "mutation_run_status": "NOT_RUN_PENDING_MAINTAINER_CONSENT"
+  },
+  "disclosure_boundary": {
+    "included": [
+      "thin adapter source",
+      "input pins",
+      "trust pins",
+      "public signature and binding rules required by the pinned case",
+      "claim identifiers",
+      "claim ceilings",
+      "run command",
+      "output contract"
+    ],
+    "excluded": [
+      "Frequency internal evidence graph",
+      "private reasoning heuristics",
+      "search strategy",
+      "repair generation or ranking",
+      "private controls",
+      "internal orchestration",
+      "model or provider selection",
+      "unpublished assurance methods"
+    ]
+  }
+}

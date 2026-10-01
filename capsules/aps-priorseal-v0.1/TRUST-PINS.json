@@ -1,0 +1,27 @@
+{
+  "schema": "frequency.federation-review-trust-pins/v0.1",
+  "aps": {
+    "did:example:agent#key-1": {
+      "algorithm": "Ed25519",
+      "public_key_hex": "f80727401f51c1b7e41eeda7004b29aca9c9d7a017144c31f7370725514d6260",
+      "public_key_sha256": "973d18c3dbb5e5587231eb5f469577b67ba4e9e91c270bfccee96b724f418308"
+    },
+    "did:example:boundary#key-1": {
+      "algorithm": "Ed25519",
+      "public_key_hex": "6468a72acb50bf67fc180d0a092e22d1aa44a43268c8e2dc7b6302dc9199126c",
+      "public_key_sha256": "aaac705d74807a4d3dbe201297424c18da57410b493e8082eacf2ddd2250865f"
+    },
+    "did:example:principal#key-1": {
+      "algorithm": "Ed25519",
+      "public_key_hex": "d69859e9701161194f0f583a2369d287ce895bf0e96b70db753b9e1e27b2bc94",
+      "public_key_sha256": "33a7f9cef316404913291ad9acc914452f301b77ef7fa6973070a717757c38f1"
+    }
+  },
+  "priorseal": {
+    "issuer": "priorseal.aps-163-fixture",
+    "key_id": "aps-163-priorseal-test-key-1",
+    "algorithm": "Ed25519",
+    "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4v4qObcyZkKCfW2C1JdiLNbCl/54Jw6qQ2sB8Ia288s=\n-----END PUBLIC KEY-----\n"
+  },
+  "trust_rule": "These keys are adapter-local verifier configuration. Artifact-adjacent keys are not promoted into trust anchors."
+}

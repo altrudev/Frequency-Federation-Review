@@ -1,0 +1,4 @@
+**/node_modules/
+artifacts/aps-priorseal-v0.1/frequency-run-report.json
+capsules/aps-priorseal-v0.1/adapter/frequency-run-report.json
+.DS_Store
