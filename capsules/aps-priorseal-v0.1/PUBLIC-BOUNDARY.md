@@ -3,6 +3,7 @@
 This adapter exposes only the minimum contract required to reproduce a bounded external-evidence evaluation:
 
 - exact public input pins and hashes;
+- byte-for-byte binding from the pinned APS owner fixture set to the copied APS bytes consumed from PriorSeal;
 - independently configured public-key pins;
 - external-profile canonicalization/signature/binding rules needed for the pinned case;
 - machine-readable claim identifiers;

@@ -1,7 +1,7 @@
 {
   "name": "@altrudev/frequency-aps-priorseal-showcase",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Thin public-artifact adapter for the bounded APS x PriorSeal Frequency assurance pilot.",
   "dependencies": {
