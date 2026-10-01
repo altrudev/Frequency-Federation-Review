@@ -1,0 +1,11 @@
+5e3cae9344a894ab1c1a941ad12fb8ee6fc0b0e123832561fd097f4dfcc0cc1f  capsules/aps-priorseal-v0.1/CAPSULE.json
+626d1545649b4fc4fadad5459f15ea459a1d0fe21215d0f429b8d5b11f2ad426  capsules/aps-priorseal-v0.1/OUTPUT-CONTRACT.md
+aa3675f452a7d0575170d0bd1b289b350b054973d1cce7626b488776b1609f2e  capsules/aps-priorseal-v0.1/PUBLIC-BOUNDARY.md
+0388532849b0435d935814ebbb332a3d630e62760683e2b7d5214141b529c28d  capsules/aps-priorseal-v0.1/RUN.md
+42fad0b255ec2094d9021cd92d8cf610e747e4119d541ca0c8a36f18c2a0f379  capsules/aps-priorseal-v0.1/TRUST-PINS.json
+528c914b2961a47a69784f9ab4f466670ebc9ae4212808f814d2bdebd57aa154  capsules/aps-priorseal-v0.1/adapter/.gitignore
+0e2cfe6102e6c77f080b5f5c531de5eb1522fd19e226665f51d1cbf3cdac9eaa  capsules/aps-priorseal-v0.1/adapter/README.md
+7c9d32eb24e7e8619ef69ac62440033f16fd93ff0f8950850ba5a9ff900cfaa5  capsules/aps-priorseal-v0.1/adapter/package-lock.json
+29204ebfe0957e32c5c838f3af24d6c8f88450485d6ed6e5bff8cf7d2e971e7f  capsules/aps-priorseal-v0.1/adapter/package.json
+9fa8252998e1c701e98761c833f33ea660f28d7d2a39288b364c263e80058c7a  capsules/aps-priorseal-v0.1/adapter/verify.mjs
+a2412c91e15614e6389f0b3bbf967df25035931f12229880e92d39720c9b03d0  capsules/aps-priorseal-v0.1/artifacts/README.md
