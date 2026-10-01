@@ -119,14 +119,46 @@ function apsDecisionRef(receipt, evidence) {
   };
   return sha256Text(`APS-DECISION-REF-V1\0${apsJcs(input)}`);
 }
+function parseManifest(manifestPath) {
+  const raw=bytes(manifestPath);
+  eq(sha256Bytes(raw), APS_MANIFEST_SHA256, 'APS manifest file hash');
+  const lines=raw.toString('utf8').trim().split(/\r?\n/);
+  return lines.map(line=>{
+    const m=line.match(/^([0-9a-f]{64})\s+\*?(.+)$/);
+    if(!m) fail(`bad APS manifest line: ${line}`);
+    return {sha256:m[1], relative_path:m[2]};
+  });
+}
 function verifyManifest(manifestPath, root) {
-  eq(sha256Bytes(bytes(manifestPath)), APS_MANIFEST_SHA256, 'APS manifest file hash');
-  const lines = fs.readFileSync(manifestPath,'utf8').trim().split(/\r?\n/);
-  for (const line of lines) {
-    const m=line.match(/^([0-9a-f]{64})\s+\*?(.+)$/); if(!m) fail(`bad APS manifest line: ${line}`);
-    const p=path.join(root,m[2]); eq(sha256Bytes(bytes(p)),m[1],`APS manifest member ${m[2]}`);
+  const entries=parseManifest(manifestPath);
+  for (const entry of entries) {
+    const p=path.join(root,entry.relative_path);
+    eq(sha256Bytes(bytes(p)),entry.sha256,`APS manifest member ${entry.relative_path}`);
   }
-  return lines.length;
+  return entries.length;
+}
+function verifyApsOwnerCopyBinding(ownerRoot, copiedRoot) {
+  const ownerManifest=path.join(ownerRoot,'MANIFEST.sha256');
+  const copiedManifest=path.join(copiedRoot,'MANIFEST.sha256');
+  const ownerEntries=parseManifest(ownerManifest);
+  const copiedEntries=parseManifest(copiedManifest);
+  requireTrue(bytes(ownerManifest).equals(bytes(copiedManifest)),'APS copied manifest differs byte-for-byte from owner manifest');
+  eq(copiedEntries.length,ownerEntries.length,'APS owner/copy manifest entry count');
+  for (const entry of ownerEntries) {
+    const ownerPath=path.join(ownerRoot,entry.relative_path);
+    const copiedPath=path.join(copiedRoot,entry.relative_path);
+    requireTrue(fs.existsSync(copiedPath),`APS copied fixture missing owner file ${entry.relative_path}`);
+    const ownerBytes=bytes(ownerPath);
+    const copiedBytes=bytes(copiedPath);
+    eq(sha256Bytes(ownerBytes),entry.sha256,`APS owner fixture hash ${entry.relative_path}`);
+    requireTrue(ownerBytes.equals(copiedBytes),`APS copied fixture differs from owner bytes: ${entry.relative_path}`);
+  }
+  return {
+    owner_commit:APS_COMMIT,
+    manifest_sha256:APS_MANIFEST_SHA256,
+    compared_files:ownerEntries.length,
+    byte_identical:true
+  };
 }
 
 function verifyApsCase(caseDir) {
@@ -215,7 +247,8 @@ function verifyPriorSealReceipt(r, aps) {
   return {exactMatch,withinCap,cap:cap.toString(),authorizedValue:String(auth.intent.transactionValue),observedValue:String(observed.nativeValue)};
 }
 
-function run({apsRoot,priorsealRoot}) {
+function run({apsOwnerRoot,apsRoot,priorsealRoot}) {
+  const sourceBinding=verifyApsOwnerCopyBinding(apsOwnerRoot,apsRoot);
   const manifestCount=verifyManifest(path.join(apsRoot,'MANIFEST.sha256'),apsRoot);
   const permit=verifyApsCase(path.join(apsRoot,'cases','permit'));
   const expired=verifyApsCase(path.join(apsRoot,'cases','expired'));
@@ -231,6 +264,7 @@ function run({apsRoot,priorsealRoot}) {
 
   const claims=[
     claim('aps.manifest.pinned',CLAIM.ESTABLISHED,[`sha256:${APS_MANIFEST_SHA256}`],null,`${manifestCount} manifest members rehashed`),
+    claim('composition.aps_owner_fixture_copy.byte_identical',CLAIM.ESTABLISHED,[`aps_commit:${APS_COMMIT}`,`sha256:${APS_MANIFEST_SHA256}`,`files:${sourceBinding.compared_files}`],null,'PriorSeal copied APS manifest members are byte-for-byte identical to the owner-repository fixture set at the pinned APS commit'),
     claim('aps.permit.receipts.authentic',CLAIM.ESTABLISHED,[permit.intent.receipt_id,permit.decision.receipt_id]),
     claim('aps.permit.delegation.authentic',CLAIM.ESTABLISHED,[permit.delegation.delegation_id]),
     claim('aps.permit.decision_ref.bound',CLAIM.ESTABLISHED,[permit.decision.decision_ref]),
@@ -254,8 +288,9 @@ function run({apsRoot,priorsealRoot}) {
   ];
 
   const adequacy={
-    status:'NOT_RUN_PENDING_MAINTAINER_CONSENT',
-    reason:'Frequency independent result is produced first. Mutation/corpus-adequacy execution remains a separate gated step.',
+    status:'NOT_RUN_PENDING_DISCRIMINATING_FIXTURES_AND_MAINTAINER_CONSENT',
+    excluded_from_formal_result:true,
+    reason:'Mutation/corpus adequacy is outside the formal result until the listed authenticity and binding mutations have discriminating fixtures and maintainers separately consent to that stage.',
     planned_targeted_mutations:[
       {id:'remove-cap-comparison',claim:'over_limit.observation.aps_cap_compliance',pinned_discriminator:true},
       {id:'ignore-observation-mismatch',claim:'over_limit.observation.exact_call_agreement',pinned_discriminator:true},
@@ -272,8 +307,8 @@ function run({apsRoot,priorsealRoot}) {
     profile:PROFILE,
     generated_at:new Date().toISOString(),
     mode:'independent-public-artifact-assurance',
-    implementation:{name:'Frequency APS x PriorSeal thin adapter',version:'0.1.0',producer_verifier_code_imported:false,generic_crypto_dependencies:['Node.js crypto','ethers verifyTypedData']},
-    pins:{aps_commit:APS_COMMIT,priorseal_commit:PRIORSEAL_COMMIT,reference_time:REFERENCE_TIME,aps_manifest_sha256:APS_MANIFEST_SHA256,positive_fixture_sha256:POSITIVE_SHA256,over_limit_fixture_sha256:OVER_LIMIT_SHA256,producer_report_sha256:REPORT_SHA256},
+    implementation:{name:'Frequency APS x PriorSeal thin adapter',version:'0.1.1',producer_verifier_code_imported:false,generic_crypto_dependencies:['Node.js crypto','ethers verifyTypedData']},
+    pins:{aps_commit:APS_COMMIT,aps_owner_fixture_binding:sourceBinding,priorseal_commit:PRIORSEAL_COMMIT,reference_time:REFERENCE_TIME,aps_manifest_sha256:APS_MANIFEST_SHA256,positive_fixture_sha256:POSITIVE_SHA256,over_limit_fixture_sha256:OVER_LIMIT_SHA256,producer_report_sha256:REPORT_SHA256},
     trust:{aps_public_keys:Object.entries(APS_KEYS).map(([id,key])=>({id,sha256:sha256Bytes(Buffer.from(key,'hex'))})),priorseal_issuer:PRIORSEAL_ISSUER,priorseal_key_id:PRIORSEAL_KEY_ID,trust_source:'adapter-local pins; artifact-adjacent keys are not trust anchors'},
     claims, adequacy,
     summary:{established:claims.filter(x=>x.result===CLAIM.ESTABLISHED).length,contradicted:claims.filter(x=>x.result===CLAIM.CONTRADICTED).length,not_established:claims.filter(x=>x.result===CLAIM.NOT_ESTABLISHED).length},
@@ -289,18 +324,19 @@ function selftest() {
 
 const args=process.argv.slice(2);
 if(args.includes('--selftest')) { console.log(JSON.stringify(selftest(),null,2)); process.exit(0); }
-let apsRoot, priorsealRoot, out;
+let apsOwnerRoot, apsRoot, priorsealRoot, out;
 for(let i=0;i<args.length;i++){
-  if(args[i]==='--aps') apsRoot=args[++i];
+  if(args[i]==='--aps-owner') apsOwnerRoot=args[++i];
+  else if(args[i]==='--aps') apsRoot=args[++i];
   else if(args[i]==='--priorseal') priorsealRoot=args[++i];
   else if(args[i]==='--out') out=args[++i];
 }
-if(!apsRoot||!priorsealRoot){
-  console.error('usage: node verify.mjs --aps <aps-inputs> --priorseal <aps-priorseal-decision-binding-v1> [--out report.json]');
+if(!apsOwnerRoot||!apsRoot||!priorsealRoot){
+  console.error('usage: node verify.mjs --aps-owner <owner-aps-fixture-root> --aps <copied-aps-inputs> --priorseal <aps-priorseal-decision-binding-v1> [--out report.json]');
   process.exit(2);
 }
 try {
-  const report=run({apsRoot:path.resolve(apsRoot),priorsealRoot:path.resolve(priorsealRoot)});
+  const report=run({apsOwnerRoot:path.resolve(apsOwnerRoot),apsRoot:path.resolve(apsRoot),priorsealRoot:path.resolve(priorsealRoot)});
   const rendered=JSON.stringify(report,null,2)+'\n';
   if(out) fs.writeFileSync(out,rendered,{mode:0o600}); else process.stdout.write(rendered);
 } catch (error) {

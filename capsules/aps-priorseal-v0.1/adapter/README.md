@@ -2,9 +2,9 @@
 
 This is a **thin external-evidence adapter** for the bounded APS × PriorSeal pilot discussed in `aeoess/agent-governance-vocabulary#177`.
 
-It intentionally does **not** import `agent-passport-system`, `priorseal-sdk`, their verifier functions, or their generated reports as an oracle. The adapter reads pinned public bytes and applies the public signing/binding contracts with adapter-local trust pins. Generic cryptography is supplied by Node.js and `ethers` for EIP-712 recovery.
+It intentionally does **not** import `agent-passport-system`, `priorseal-sdk`, their verifier functions, or their generated reports as an oracle. The adapter reads pinned public bytes and applies the public signing/binding contracts with adapter-local trust pins. It also requires the owner APS fixture checkout and proves that every manifest-declared APS byte consumed from the PriorSeal copy is identical to the owner-repository fixture at the pinned APS commit. Generic cryptography is supplied by Node.js and `ethers` for EIP-712 recovery.
 
-The output is per-claim. It separates `ESTABLISHED`, `CONTRADICTED`, and `NOT_ESTABLISHED` rather than collapsing the run into one pass/fail result. It also emits explicit claim ceilings and a mutation-adequacy plan. The mutation run is deliberately **not executed** until the separately agreed adequacy gate is opened.
+The output is per-claim. It separates `ESTABLISHED`, `CONTRADICTED`, and `NOT_ESTABLISHED` rather than collapsing the run into one pass/fail result. It also emits explicit claim ceilings and a mutation-adequacy plan. The mutation run is deliberately **not executed** and is excluded from the formal result until discriminating authenticity/binding fixtures exist and the separately agreed adequacy gate is opened.
 
 ## Pinned pilot
 
@@ -21,6 +21,7 @@ The output is per-claim. It separates `ESTABLISHED`, `CONTRADICTED`, and `NOT_ES
 cd tools/aps-priorseal-showcase
 npm ci
 node verify.mjs \
+  --aps-owner /path/to/agent-passport-system/fixtures/priorseal-decision-binding \
   --aps /path/to/PriorSeal/examples/aps-priorseal-decision-binding-v1/aps-inputs \
   --priorseal /path/to/PriorSeal/examples/aps-priorseal-decision-binding-v1 \
   --out frequency-run-report.json

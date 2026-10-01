@@ -20,16 +20,17 @@ cd capsules/aps-priorseal-v0.1/adapter
 npm ci --ignore-scripts --no-audit --no-fund
 npm run selftest
 
-node verify.mjs \
-  --aps ../../../inputs/PriorSeal/examples/aps-priorseal-decision-binding-v1/aps-inputs \
-  --priorseal ../../../inputs/PriorSeal/examples/aps-priorseal-decision-binding-v1 \
-  --out ../../../artifacts/aps-priorseal-v0.1/frequency-run-report.json
+node verify.mjs   --aps-owner ../../../inputs/agent-passport-system/fixtures/priorseal-decision-binding   --aps ../../../inputs/PriorSeal/examples/aps-priorseal-decision-binding-v1/aps-inputs   --priorseal ../../../inputs/PriorSeal/examples/aps-priorseal-decision-binding-v1   --out ../../../artifacts/aps-priorseal-v0.1/frequency-run-report.json
 ```
 
-The `agent-passport-system` checkout makes the owner-designated APS commit explicit and independently inspectable. The frozen PriorSeal interoperability directory contains the copied APS input fixture bytes used by this bounded composition.
+Before any APS claim is evaluated, the adapter verifies that the owner-repository APS manifest at the pinned APS commit and the copied APS manifest inside PriorSeal are byte-for-byte identical. It then compares every one of the 17 manifest-declared fixture files byte-for-byte. Any missing or changed copied file causes a fail-closed exit and no report.
+
+The resulting source-binding claim is:
+
+`composition.aps_owner_fixture_copy.byte_identical`
 
 ## Expected output location
 
 `artifacts/aps-priorseal-v0.1/frequency-run-report.json`
 
-The formal Frequency run will not be published until scope is explicitly confirmed. Publication of any formal result is a separate decision.
+The formal Frequency run will not be published until scope is explicitly confirmed. Mutation/corpus adequacy remains outside the formal result until discriminating authenticity/binding fixtures exist and that stage is separately agreed. Publication of any formal result is a separate decision.
