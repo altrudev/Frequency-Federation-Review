@@ -16,6 +16,14 @@ On success it emits:
 
 A mismatch is not converted into a weak or unknown claim. The verifier fails closed and does not emit a report.
 
+## Trust-key scope
+
+The three APS public keys used by this capsule are the test keys published in the pinned APS fixture `keys.json`. An APS authenticity result therefore establishes signature verification under those fixture test keys only. It does not establish production identity, production key control, or production deployment.
+
+## Run-output freshness
+
+The adapter refuses an existing `--out` destination. The pinned runner also requires a previously nonexistent attempt directory, records the exact review commit and adapter SHA-256, and always records the process exit status. A failed attempt cannot promote a pre-existing report into a new result.
+
 A contradiction is a claim-level result, not a process crash. The pinned negative fixtures are expected to contradict the relevant temporal, exact-call, and cap-compliance claims.
 
 The following claims cannot be promoted by this fixture-only run:

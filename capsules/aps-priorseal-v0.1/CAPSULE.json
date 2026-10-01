@@ -1,7 +1,7 @@
 {
   "schema": "frequency.federation-review-capsule/v0.1",
   "capsule_id": "aps-priorseal-v0.1",
-  "status": "SCOPE_REVIEW_READY_SOURCE_BOUND",
+  "status": "SCOPE_REVIEW_READY_SOURCE_BOUND_RUN_PINNED",
   "formal_run_status": "NOT_RUN_PENDING_SCOPE_CONFIRMATION",
   "publication_status": "HOLD_PENDING_SEPARATE_AGREEMENT",
   "private_origin": {
@@ -27,6 +27,10 @@
     "producer_verifier_code_imported": false,
     "output_path": "artifacts/aps-priorseal-v0.1/frequency-run-report.json",
     "command_document": "RUN.md",
+    "pinned_runner": "run-pinned.sh",
+    "fresh_attempt_directory_required": true,
+    "existing_report_destination_rejected": true,
+    "run_metadata_records_adapter_commit_and_digest": true,
     "owner_source_binding_required": true,
     "owner_fixture_root": "inputs/agent-passport-system/fixtures/priorseal-decision-binding",
     "copied_fixture_root": "inputs/PriorSeal/examples/aps-priorseal-decision-binding-v1/aps-inputs"
@@ -40,6 +44,7 @@
     "note": "Development preflight shape after owner-source byte binding. It is not the formal pilot result."
   },
   "claim_ceiling": {
+    "aps.fixture_test_key_scope": "APS authenticity claims establish verification under the pinned fixture test keys only; production identity and production key control are not established.",
     "live_chain.execution_occurred": "NOT_ESTABLISHED",
     "aps.decision.single_use": "NOT_ESTABLISHED",
     "aps.live_currency_enforcement": "NOT_ESTABLISHED",
@@ -79,5 +84,5 @@
       "unpublished assurance methods"
     ]
   },
-  "public_review_revision": "0.1.1"
+  "public_review_revision": "0.1.2"
 }

@@ -22,6 +22,7 @@ const PRIORSEAL_KEY_ID = 'aps-163-priorseal-test-key-1';
 const PRIORSEAL_PUBLIC_KEY_PEM = `-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4v4qObcyZkKCfW2C1JdiLNbCl/54Jw6qQ2sB8Ia288s=\n-----END PUBLIC KEY-----\n`;
 
 const CLAIM = Object.freeze({ ESTABLISHED:'ESTABLISHED', CONTRADICTED:'CONTRADICTED', NOT_ESTABLISHED:'NOT_ESTABLISHED' });
+const APS_TEST_KEY_CEILING = 'signature verification under the pinned APS fixture test keys only; production identity, production key control, and production deployment are not established';
 
 function fail(message) { throw new Error(message); }
 function bytes(p) { return fs.readFileSync(p); }
@@ -265,8 +266,8 @@ function run({apsOwnerRoot,apsRoot,priorsealRoot}) {
   const claims=[
     claim('aps.manifest.pinned',CLAIM.ESTABLISHED,[`sha256:${APS_MANIFEST_SHA256}`],null,`${manifestCount} manifest members rehashed`),
     claim('composition.aps_owner_fixture_copy.byte_identical',CLAIM.ESTABLISHED,[`aps_commit:${APS_COMMIT}`,`sha256:${APS_MANIFEST_SHA256}`,`files:${sourceBinding.compared_files}`],null,'PriorSeal copied APS manifest members are byte-for-byte identical to the owner-repository fixture set at the pinned APS commit'),
-    claim('aps.permit.receipts.authentic',CLAIM.ESTABLISHED,[permit.intent.receipt_id,permit.decision.receipt_id]),
-    claim('aps.permit.delegation.authentic',CLAIM.ESTABLISHED,[permit.delegation.delegation_id]),
+    claim('aps.permit.receipts.authentic',CLAIM.ESTABLISHED,[permit.intent.receipt_id,permit.decision.receipt_id],APS_TEST_KEY_CEILING),
+    claim('aps.permit.delegation.authentic',CLAIM.ESTABLISHED,[permit.delegation.delegation_id],APS_TEST_KEY_CEILING),
     claim('aps.permit.decision_ref.bound',CLAIM.ESTABLISHED,[permit.decision.decision_ref]),
     claim('aps.permit.temporal_validity_at_reference',permit.current?CLAIM.ESTABLISHED:CLAIM.CONTRADICTED,[REFERENCE_TIME]),
     claim('aps.expired.temporal_validity_at_reference',expired.current?CLAIM.ESTABLISHED:CLAIM.CONTRADICTED,[REFERENCE_TIME]),
@@ -307,9 +308,9 @@ function run({apsOwnerRoot,apsRoot,priorsealRoot}) {
     profile:PROFILE,
     generated_at:new Date().toISOString(),
     mode:'independent-public-artifact-assurance',
-    implementation:{name:'Frequency APS x PriorSeal thin adapter',version:'0.1.1',producer_verifier_code_imported:false,generic_crypto_dependencies:['Node.js crypto','ethers verifyTypedData']},
+    implementation:{name:'Frequency APS x PriorSeal thin adapter',version:'0.1.2',producer_verifier_code_imported:false,generic_crypto_dependencies:['Node.js crypto','ethers verifyTypedData']},
     pins:{aps_commit:APS_COMMIT,aps_owner_fixture_binding:sourceBinding,priorseal_commit:PRIORSEAL_COMMIT,reference_time:REFERENCE_TIME,aps_manifest_sha256:APS_MANIFEST_SHA256,positive_fixture_sha256:POSITIVE_SHA256,over_limit_fixture_sha256:OVER_LIMIT_SHA256,producer_report_sha256:REPORT_SHA256},
-    trust:{aps_public_keys:Object.entries(APS_KEYS).map(([id,key])=>({id,sha256:sha256Bytes(Buffer.from(key,'hex'))})),priorseal_issuer:PRIORSEAL_ISSUER,priorseal_key_id:PRIORSEAL_KEY_ID,trust_source:'adapter-local pins; artifact-adjacent keys are not trust anchors'},
+    trust:{aps_public_keys:Object.entries(APS_KEYS).map(([id,key])=>({id,sha256:sha256Bytes(Buffer.from(key,'hex'))})),aps_key_provenance:'APS fixture test keys published in the pinned fixture keys.json and copied into adapter-local pins',aps_key_scope:'verification under fixture test keys only; does not establish production identity or who controls production keys',priorseal_issuer:PRIORSEAL_ISSUER,priorseal_key_id:PRIORSEAL_KEY_ID,trust_source:'adapter-local pins; APS values originate from the pinned fixture test keys; artifact-adjacent keys are not treated as production trust anchors'},
     claims, adequacy,
     summary:{established:claims.filter(x=>x.result===CLAIM.ESTABLISHED).length,contradicted:claims.filter(x=>x.result===CLAIM.CONTRADICTED).length,not_established:claims.filter(x=>x.result===CLAIM.NOT_ESTABLISHED).length},
     disclosure_boundary:{public_contract:['input pins','trust-key identifiers/digests','claim IDs','evidence references','bounded results','claim ceilings','adequacy plan'],not_disclosed:['Frequency internal reasoning graph','private heuristics','repair ranking','internal orchestration','private assurance controls']}
@@ -336,9 +337,16 @@ if(!apsOwnerRoot||!apsRoot||!priorsealRoot){
   process.exit(2);
 }
 try {
+  const resolvedOut = out ? path.resolve(out) : null;
+  if(resolvedOut && fs.existsSync(resolvedOut)) {
+    fail(`refusing existing output path: ${resolvedOut}`);
+  }
   const report=run({apsOwnerRoot:path.resolve(apsOwnerRoot),apsRoot:path.resolve(apsRoot),priorsealRoot:path.resolve(priorsealRoot)});
   const rendered=JSON.stringify(report,null,2)+'\n';
-  if(out) fs.writeFileSync(out,rendered,{mode:0o600}); else process.stdout.write(rendered);
+  if(resolvedOut) {
+    const fd = fs.openSync(resolvedOut,'wx',0o600);
+    try { fs.writeFileSync(fd,rendered); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+  } else process.stdout.write(rendered);
 } catch (error) {
   console.error(`Frequency assurance run failed closed: ${error?.stack||error}`);
   process.exit(1);

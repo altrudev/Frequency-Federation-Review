@@ -23,5 +23,7 @@
     "algorithm": "Ed25519",
     "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4v4qObcyZkKCfW2C1JdiLNbCl/54Jw6qQ2sB8Ia288s=\n-----END PUBLIC KEY-----\n"
   },
-  "trust_rule": "These keys are adapter-local verifier configuration. Artifact-adjacent keys are not promoted into trust anchors."
+  "aps_key_provenance": "The three APS public-key values match the pinned fixture test keys published in keys.json at APS commit 948f99b85343bef2c6fa677c8543965caacfc087.",
+  "aps_key_scope": "A successful APS signature check establishes verification under those fixture test keys only. It does not establish production identity, production key control, or production deployment.",
+  "trust_rule": "These keys are adapter-local verifier configuration. Artifact-adjacent keys are not promoted into production trust anchors."
 }
