@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frequency.local/schema/federation-status-registry-v0.1.schema.json",
+  "title": "Federation Status Registry v0.1 Proposal",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "projects",
+    "pilots",
+    "decisions",
+    "commercial_delivery",
+    "semantics"
+  ],
+  "properties": {
+    "schema": {
+      "const": "frequency.federation.status-registry/v0.1"
+    },
+    "status": {
+      "const": "PROPOSAL"
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "maintainer_ref",
+          "capabilities",
+          "supported_interfaces",
+          "limitations",
+          "availability",
+          "participation_state",
+          "owner_confirmation_ref"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maintainer_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supported_interfaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "availability": {
+            "type": "string"
+          },
+          "participation_state": {
+            "enum": [
+              "LISTED",
+              "TECHNICAL_PARTICIPANT",
+              "ACTIVE_PARTICIPANT",
+              "INACTIVE"
+            ]
+          },
+          "owner_confirmation_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "explicit_opt_in_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "opt_in_scope": {
+            "type": "string"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "participation_state": {
+                  "const": "ACTIVE_PARTICIPANT"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "explicit_opt_in_ref"
+              ]
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    "pilots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "pilot_id",
+          "participants",
+          "pins",
+          "adapter_owner",
+          "acceptance_criteria_refs",
+          "dependencies",
+          "status",
+          "evidence_refs"
+        ],
+        "properties": {
+          "pilot_id": {
+            "type": "string"
+          },
+          "participants": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "pins": {
+            "type": "object"
+          },
+          "adapter_owner": {
+            "type": "string"
+          },
+          "acceptance_criteria_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "proposal_ref",
+          "review_deadline",
+          "approvals",
+          "unresolved_objections",
+          "decision_status",
+          "decision_record_ref",
+          "retroactive"
+        ],
+        "properties": {
+          "proposal_ref": {
+            "type": "string"
+          },
+          "review_deadline": {
+            "type": "string"
+          },
+          "approvals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unresolved_objections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "decision_status": {
+            "enum": [
+              "OPEN",
+              "APPROVED",
+              "REJECTED",
+              "WITHDRAWN"
+            ]
+          },
+          "decision_record_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retroactive": {
+            "const": false
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "decision_status": {
+                  "const": "APPROVED"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "decision_record_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    "commercial_delivery": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "offering_id",
+          "status",
+          "component_project_ids"
+        ],
+        "properties": {
+          "offering_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "NOT_ACTIVE",
+              "PROPOSED",
+              "ACTIVE",
+              "RETIRED"
+            ]
+          },
+          "component_project_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contracting_operator_ref": {
+            "type": "string"
+          },
+          "support_commitments_ref": {
+            "type": "string"
+          },
+          "component_agreement_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "ACTIVE"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "contracting_operator_ref",
+                "support_commitments_ref",
+                "component_agreement_refs"
+              ]
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    "semantics": {
+      "const": {
+        "listing_is_membership": false,
+        "technical_participation_is_active_membership": false,
+        "active_participation_requires_explicit_opt_in": true,
+        "registry_is_source_of_authority": false,
+        "github_evidence_remains_source_of_truth": true,
+        "economic_formula_defined": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
