@@ -1,14 +1,14 @@
-0f1d1def3ca7c0cdc5674e5b18abca053674e095d153eead335265910d2b7c17  capsules/aps-priorseal-v0.1/CAPSULE.json
+67e04689699fb444ecedfb672b51cfa6bc0c10f05d5a7118d5893c78c9737c84  capsules/aps-priorseal-v0.1/CAPSULE.json
 2ad1a36016c018f0fd5b778fb479c73551aa782d154edfec5eb0303fdf6a8289  capsules/aps-priorseal-v0.1/OUTPUT-CONTRACT.md
 8830e15944d3fb7456055f8f48b68440d63dc77cf59f9681b464dbd8b2d5feda  capsules/aps-priorseal-v0.1/PUBLIC-BOUNDARY.md
 96c2fe35b26e61b6bf03d7229fc08a25a7e1311fc4d9c514287673ea7edb8fcd  capsules/aps-priorseal-v0.1/RUN.md
 d431695ff4990358358ee31fcfd014ae6a9db82cbfa7dddfae642111e9a7fb86  capsules/aps-priorseal-v0.1/SOURCE-BINDING.md
 da9cc6d6bc8c64372fe09932664a79615995cbceb3a058f63920249fe06264c3  capsules/aps-priorseal-v0.1/TRUST-PINS.json
-45b03b7c4932acc42aac3eb58149ba0acf089dd5de70b61eb210764041bd3723  capsules/aps-priorseal-v0.1/VALIDATION.md
+443f04bd8600c61e6fb8e7ca704d7951be2d7ccd84b0239b6d97dd5bde68f0d6  capsules/aps-priorseal-v0.1/VALIDATION.md
 528c914b2961a47a69784f9ab4f466670ebc9ae4212808f814d2bdebd57aa154  capsules/aps-priorseal-v0.1/adapter/.gitignore
 2a3153044faa64e4d3af31c1b277fa531ebd3692b384096780aa56c6f6ab4194  capsules/aps-priorseal-v0.1/adapter/README.md
 d29abcb5af552c3cf236c7e47d9026963202bfa2f3670ce13f9543d5731a87b3  capsules/aps-priorseal-v0.1/adapter/package-lock.json
 fb3504568c1ce2f9e65c1739c13fad8343da24b8bc5fb7a8b59a6570de84f25e  capsules/aps-priorseal-v0.1/adapter/package.json
 777232374359376dfb851dbe474b7e37670cab615a941147b80239022118f927  capsules/aps-priorseal-v0.1/adapter/verify.mjs
 a2412c91e15614e6389f0b3bbf967df25035931f12229880e92d39720c9b03d0  capsules/aps-priorseal-v0.1/artifacts/README.md
-28594cd2dc584beeb2d62818494282dd73c83190a997a6b29680db2b33201e37  capsules/aps-priorseal-v0.1/run-pinned.sh
+4b289714de31174a917b9c0f856e1d8900828e1bcbf637cdc8e97bc2deec2e34  capsules/aps-priorseal-v0.1/run-pinned.sh

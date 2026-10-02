@@ -1,4 +1,4 @@
-# Revision 0.1.2 validation
+# Revision 0.1.3 validation
 
 This document records publication-gate checks for the review capsule. It is not a formal federation pilot result.
 
@@ -22,6 +22,8 @@ At the pinned commits:
 - source-bound public-input development preflight: 14 ESTABLISHED / 3 CONTRADICTED / 5 NOT_ESTABLISHED
 - source-binding claim: ESTABLISHED
 - one-byte copied-fixture mutation: FAIL CLOSED
+- pinned runner propagates verifier failure as a non-zero process exit: PASS
+- pinned runner records the same non-zero failure in `exit-status.txt`: PASS
 - report emitted after tamper: NO
 - missing `--aps-owner`: rejected with usage error
 - APS trust-key provenance disclosed as pinned fixture test keys: PASS
