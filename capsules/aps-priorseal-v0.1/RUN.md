@@ -6,7 +6,7 @@ This command is provided so maintainers can review and reproduce the proposed bo
 
 Frequency Federation Review adapter commit:
 
-`bf1838c2936dabefc28c116ab7bfd106f572af88`
+`cf7389097fe3a404b3557da2e72fdd8cbe962b81`
 
 The pinned runner requires the review checkout to be exactly this commit and clean, verifies the capsule manifest, records the adapter SHA-256 and both producer commits, and requires a fresh attempt directory.
 
@@ -14,7 +14,7 @@ The pinned runner requires the review checkout to be exactly this commit and cle
 
 ```bash
 git clone https://github.com/altrudev/Frequency-Federation-Review.git
-git -C Frequency-Federation-Review checkout bf1838c2936dabefc28c116ab7bfd106f572af88
+git -C Frequency-Federation-Review checkout cf7389097fe3a404b3557da2e72fdd8cbe962b81
 
 git clone https://github.com/aeoess/agent-passport-system.git /tmp/frequency-aps
 git -C /tmp/frequency-aps checkout 948f99b85343bef2c6fa677c8543965caacfc087
@@ -28,7 +28,7 @@ Run one fresh attempt:
 ```bash
 Frequency-Federation-Review/capsules/aps-priorseal-v0.1/run-pinned.sh \
   --repo "$PWD/Frequency-Federation-Review" \
-  --adapter-commit bf1838c2936dabefc28c116ab7bfd106f572af88 \
+  --adapter-commit cf7389097fe3a404b3557da2e72fdd8cbe962b81 \
   --aps-repo /tmp/frequency-aps \
   --priorseal-repo /tmp/frequency-priorseal \
   --attempt-dir /tmp/frequency-aps-priorseal-attempt-001
