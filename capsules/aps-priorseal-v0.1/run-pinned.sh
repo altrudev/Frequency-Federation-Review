@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -u
+set -euo pipefail
 
 usage() {
   echo "usage: $0 --repo <Frequency-Federation-Review> --adapter-commit <40hex> --aps-repo <path> --priorseal-repo <path> --attempt-dir <new-dir>" >&2
