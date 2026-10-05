@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "offer_id": "frequency:a1:aps-priorseal:formal-v1",
+  "operator": "Val Rukhaylo / Altru.dev",
+  "observed_artifact_sha256": {
+    "runner": "4b289714de31174a917b9c0f856e1d8900828e1bcbf637cdc8e97bc2deec2e34",
+    "adapter": "777232374359376dfb851dbe474b7e37670cab615a941147b80239022118f927",
+    "capsule-manifest": "d4aba933c7d8f9e93ffb1457fe656699161de7a46d4ac5b2e59dad26c338583a",
+    "trust-pins": "da9cc6d6bc8c64372fe09932664a79615995cbceb3a058f63920249fe06264c3",
+    "aps-owner-manifest": "2bf365bc9124ecfc943d5be86c34e8e0cacd51a5929b8d0c906e633a017231f9",
+    "aps-copy-manifest": "2bf365bc9124ecfc943d5be86c34e8e0cacd51a5929b8d0c906e633a017231f9",
+    "priorseal-positive": "c8dd05f412b3d1dd957f66deaf231a8becb9656e8bd1960ba88638cf9ad4c6da",
+    "priorseal-over-limit": "cb45a8378a5c9f1f7f2695c4d1fb5cbe344d9c840b799cf0ecb786e5ddf3c226",
+    "priorseal-producer-report": "d2c1bea5f0acf0afe06c944376c5a471402ab5d48bf85ca267ed9b5876336ae4"
+  },
+  "capture": {
+    "argv_ref": "pending:argv",
+    "working_directory": "pending:cwd",
+    "process_start_time_ref": "pending:start-time",
+    "stdout_ref": "pending:stdout",
+    "stderr_ref": "pending:stderr",
+    "exit_status_ref": "pending:exit-status",
+    "file_hash_manifest_ref": "pending:capture-manifest"
+  },
+  "claim_results": [
+    {
+      "claim_id": "aps.manifest.pinned",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.manifest.pinned"
+      ],
+      "claimed_ceiling": {
+        "domain": "Provenance",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "composition.aps_owner_fixture_copy.byte_identical",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:composition.aps_owner_fixture_copy.byte_identical"
+      ],
+      "claimed_ceiling": {
+        "domain": "Provenance",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.permit.receipts.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.permit.receipts.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.permit.delegation.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.permit.delegation.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.permit.decision_ref.bound",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.permit.decision_ref.bound"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.permit.temporal_validity_at_reference",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.permit.temporal_validity_at_reference"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.expired.temporal_validity_at_reference",
+      "disposition": "CONTRADICTED",
+      "evidence_refs": [
+        "pending:report:aps.expired.temporal_validity_at_reference"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "aps.deny.decision_verdict",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.deny.decision_verdict"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "priorseal.principal_eip712_authorization.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:priorseal.principal_eip712_authorization.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "priorseal.issuer_acceptance.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:priorseal.issuer_acceptance.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "priorseal.execution_receipt.positive.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:priorseal.execution_receipt.positive.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "priorseal.execution_receipt.over_limit.authentic",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:priorseal.execution_receipt.over_limit.authentic"
+      ],
+      "claimed_ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "composition.aps_decision_to_priorseal_authorization.bound",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:composition.aps_decision_to_priorseal_authorization.bound"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "positive.observation.exact_call_agreement",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:positive.observation.exact_call_agreement"
+      ],
+      "claimed_ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "positive.observation.aps_cap_compliance",
+      "disposition": "ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:positive.observation.aps_cap_compliance"
+      ],
+      "claimed_ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "over_limit.observation.exact_call_agreement",
+      "disposition": "CONTRADICTED",
+      "evidence_refs": [
+        "pending:report:over_limit.observation.exact_call_agreement"
+      ],
+      "claimed_ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "over_limit.observation.aps_cap_compliance",
+      "disposition": "CONTRADICTED",
+      "evidence_refs": [
+        "pending:report:over_limit.observation.aps_cap_compliance"
+      ],
+      "claimed_ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      }
+    },
+    {
+      "claim_id": "live_chain.execution_occurred",
+      "disposition": "NOT_ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:live_chain.execution_occurred"
+      ],
+      "claimed_ceiling": {
+        "domain": "Execution",
+        "extent": "Declared"
+      }
+    },
+    {
+      "claim_id": "aps.decision.single_use",
+      "disposition": "NOT_ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.decision.single_use"
+      ],
+      "claimed_ceiling": {
+        "domain": "Authorization",
+        "extent": "Declared"
+      }
+    },
+    {
+      "claim_id": "aps.live_currency_enforcement",
+      "disposition": "NOT_ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:aps.live_currency_enforcement"
+      ],
+      "claimed_ceiling": {
+        "domain": "Effect",
+        "extent": "Declared"
+      }
+    },
+    {
+      "claim_id": "observation.independent_external_witness",
+      "disposition": "NOT_ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:observation.independent_external_witness"
+      ],
+      "claimed_ceiling": {
+        "domain": "Provenance",
+        "extent": "Declared"
+      }
+    },
+    {
+      "claim_id": "production.adoption",
+      "disposition": "NOT_ESTABLISHED",
+      "evidence_refs": [
+        "pending:report:production.adoption"
+      ],
+      "claimed_ceiling": {
+        "domain": "SystemState",
+        "extent": "Declared"
+      }
+    }
+  ],
+  "negative_control_results": [
+    {
+      "control_id": "expired-temporal-negative",
+      "observation_refs": [
+        "pending:aps.expired.temporal_validity_at_reference=CONTRADICTED"
+      ],
+      "passed": true
+    },
+    {
+      "control_id": "over-limit-exact-call-negative",
+      "observation_refs": [
+        "pending:over_limit.observation.exact_call_agreement=CONTRADICTED"
+      ],
+      "passed": true
+    },
+    {
+      "control_id": "over-limit-cap-negative",
+      "observation_refs": [
+        "pending:over_limit.observation.aps_cap_compliance=CONTRADICTED"
+      ],
+      "passed": true
+    }
+  ],
+  "producer_consent_refs": [],
+  "operator_statement": "Template only. Final statement is generated after the one authorized formal run.",
+  "producer_approved": false,
+  "producer_approval_refs": [],
+  "shared_record_admitted": false,
+  "shared_record_admission_refs": [],
+  "published": false,
+  "publication_approval_refs": []
+}
