@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "offer_id": "frequency:a1:aps-priorseal:formal-v1",
+  "issuer": "aeoess/agent-passport-system",
+  "procedure_ref": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/run-pinned.sh",
+  "procedure_sha256": "4b289714de31174a917b9c0f856e1d8900828e1bcbf637cdc8e97bc2deec2e34",
+  "artifacts": [
+    {
+      "artifact_id": "runner",
+      "locator": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/run-pinned.sh",
+      "sha256": "4b289714de31174a917b9c0f856e1d8900828e1bcbf637cdc8e97bc2deec2e34",
+      "owner": "altrudev/Frequency-Federation-Review"
+    },
+    {
+      "artifact_id": "adapter",
+      "locator": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/adapter/verify.mjs",
+      "sha256": "777232374359376dfb851dbe474b7e37670cab615a941147b80239022118f927",
+      "owner": "altrudev/Frequency-Federation-Review"
+    },
+    {
+      "artifact_id": "capsule-manifest",
+      "locator": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/MANIFEST.sha256",
+      "sha256": "d4aba933c7d8f9e93ffb1457fe656699161de7a46d4ac5b2e59dad26c338583a",
+      "owner": "altrudev/Frequency-Federation-Review"
+    },
+    {
+      "artifact_id": "trust-pins",
+      "locator": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/TRUST-PINS.json",
+      "sha256": "da9cc6d6bc8c64372fe09932664a79615995cbceb3a058f63920249fe06264c3",
+      "owner": "altrudev/Frequency-Federation-Review"
+    },
+    {
+      "artifact_id": "aps-owner-manifest",
+      "locator": "git:aeoess/agent-passport-system@948f99b85343bef2c6fa677c8543965caacfc087:fixtures/priorseal-decision-binding/MANIFEST.sha256",
+      "sha256": "2bf365bc9124ecfc943d5be86c34e8e0cacd51a5929b8d0c906e633a017231f9",
+      "owner": "aeoess/agent-passport-system"
+    },
+    {
+      "artifact_id": "aps-copy-manifest",
+      "locator": "git:imokokok/PriorSeal@d749d2691c3e6be139de4020e7b27cdafca2c428:examples/aps-priorseal-decision-binding-v1/aps-inputs/MANIFEST.sha256",
+      "sha256": "2bf365bc9124ecfc943d5be86c34e8e0cacd51a5929b8d0c906e633a017231f9",
+      "owner": "imokokok/PriorSeal"
+    },
+    {
+      "artifact_id": "priorseal-positive",
+      "locator": "git:imokokok/PriorSeal@d749d2691c3e6be139de4020e7b27cdafca2c428:examples/aps-priorseal-decision-binding-v1/priorseal-inputs/payment-within-limit.json",
+      "sha256": "c8dd05f412b3d1dd957f66deaf231a8becb9656e8bd1960ba88638cf9ad4c6da",
+      "owner": "imokokok/PriorSeal"
+    },
+    {
+      "artifact_id": "priorseal-over-limit",
+      "locator": "git:imokokok/PriorSeal@d749d2691c3e6be139de4020e7b27cdafca2c428:examples/aps-priorseal-decision-binding-v1/priorseal-inputs/payment-over-limit.json",
+      "sha256": "cb45a8378a5c9f1f7f2695c4d1fb5cbe344d9c840b799cf0ecb786e5ddf3c226",
+      "owner": "imokokok/PriorSeal"
+    },
+    {
+      "artifact_id": "priorseal-producer-report",
+      "locator": "git:imokokok/PriorSeal@d749d2691c3e6be139de4020e7b27cdafca2c428:examples/aps-priorseal-decision-binding-v1/PAYMENT-LIMIT-REPORT.json",
+      "sha256": "d2c1bea5f0acf0afe06c944376c5a471402ab5d48bf85ca267ed9b5876336ae4",
+      "owner": "imokokok/PriorSeal"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "aps.manifest.pinned",
+      "statement": "Pinned APS manifest members rehash exactly.",
+      "ceiling": {
+        "domain": "Provenance",
+        "extent": "Verified"
+      },
+      "classification_rule": "Rehash every manifest-declared APS fixture member.",
+      "required_evidence": [
+        "aps manifest and member digests"
+      ]
+    },
+    {
+      "claim_id": "composition.aps_owner_fixture_copy.byte_identical",
+      "statement": "The PriorSeal APS copy is byte-identical to the pinned APS owner fixture set.",
+      "ceiling": {
+        "domain": "Provenance",
+        "extent": "Verified"
+      },
+      "classification_rule": "Require identical manifest bytes and all 17 owner-declared fixture bytes.",
+      "required_evidence": [
+        "owner/copy manifest and byte comparison"
+      ]
+    },
+    {
+      "claim_id": "aps.permit.receipts.authentic",
+      "statement": "Permit receipts verify under the pinned APS fixture test keys only.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Verify receipt IDs and Ed25519 signatures against fixture test-key pins.",
+      "required_evidence": [
+        "permit receipt signatures"
+      ]
+    },
+    {
+      "claim_id": "aps.permit.delegation.authentic",
+      "statement": "Permit delegation verifies under the pinned APS fixture test key only.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Verify delegation ID and Ed25519 signature against the fixture test-key pin.",
+      "required_evidence": [
+        "delegation signature"
+      ]
+    },
+    {
+      "claim_id": "aps.permit.decision_ref.bound",
+      "statement": "Permit decision_ref is bound to its action, authority, policy, context, and decision output.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      },
+      "classification_rule": "Recompute the APS decision_ref from the pinned fixture evidence.",
+      "required_evidence": [
+        "decision_ref reconstruction"
+      ]
+    },
+    {
+      "claim_id": "aps.permit.temporal_validity_at_reference",
+      "statement": "Permit decision is temporally valid at the fixed reference time.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare valid_until to 2026-09-19T10:05:00.000Z.",
+      "required_evidence": [
+        "reference-time comparison"
+      ]
+    },
+    {
+      "claim_id": "aps.expired.temporal_validity_at_reference",
+      "statement": "Expired fixture is temporally valid at the fixed reference time.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare expired valid_until to the fixed reference time; expected result is CONTRADICTED.",
+      "required_evidence": [
+        "negative temporal fixture"
+      ]
+    },
+    {
+      "claim_id": "aps.deny.decision_verdict",
+      "statement": "Deny fixture carries a deny decision verdict.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      },
+      "classification_rule": "Require decision.result.verdict == deny.",
+      "required_evidence": [
+        "deny fixture decision"
+      ]
+    },
+    {
+      "claim_id": "priorseal.principal_eip712_authorization.authentic",
+      "statement": "PriorSeal principal EIP-712 authorization verifies for the pinned fixture.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Reconstruct typed data and recover the pinned fixture authorizer.",
+      "required_evidence": [
+        "EIP-712 authorization signature"
+      ]
+    },
+    {
+      "claim_id": "priorseal.issuer_acceptance.authentic",
+      "statement": "PriorSeal issuer acceptance verifies for the pinned fixture.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Verify acceptance hash bindings and Ed25519 signature under the pinned fixture issuer key.",
+      "required_evidence": [
+        "issuer acceptance signature"
+      ]
+    },
+    {
+      "claim_id": "priorseal.execution_receipt.positive.authentic",
+      "statement": "Positive PriorSeal execution receipt verifies for the pinned fixture.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Verify receipt hashes and issuer signature for the pinned positive fixture.",
+      "required_evidence": [
+        "positive receipt signature and digest"
+      ]
+    },
+    {
+      "claim_id": "priorseal.execution_receipt.over_limit.authentic",
+      "statement": "Over-limit PriorSeal execution receipt verifies for the pinned fixture.",
+      "ceiling": {
+        "domain": "Cryptography",
+        "extent": "Verified"
+      },
+      "classification_rule": "Verify receipt hashes and issuer signature for the pinned over-limit fixture.",
+      "required_evidence": [
+        "over-limit receipt signature and digest"
+      ]
+    },
+    {
+      "claim_id": "composition.aps_decision_to_priorseal_authorization.bound",
+      "statement": "PriorSeal authorization is bound to the pinned APS decision_ref.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Verified"
+      },
+      "classification_rule": "Require exactly one APS decision-ref commitment matching the APS permit decision_ref.",
+      "required_evidence": [
+        "cross-system decision-ref binding"
+      ]
+    },
+    {
+      "claim_id": "positive.observation.exact_call_agreement",
+      "statement": "Positive fixture observation exactly agrees with the authorized call.",
+      "ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare chain, target, calldata hash, and native value.",
+      "required_evidence": [
+        "positive exact-call comparison"
+      ]
+    },
+    {
+      "claim_id": "positive.observation.aps_cap_compliance",
+      "statement": "Positive fixture observation is within the APS per-action cap.",
+      "ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare observed native value to the APS delegated spend cap.",
+      "required_evidence": [
+        "positive cap comparison"
+      ]
+    },
+    {
+      "claim_id": "over_limit.observation.exact_call_agreement",
+      "statement": "Over-limit fixture observation exactly agrees with the authorized call.",
+      "ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare observed native value to the authorized transaction value; expected result is CONTRADICTED.",
+      "required_evidence": [
+        "negative exact-call fixture"
+      ]
+    },
+    {
+      "claim_id": "over_limit.observation.aps_cap_compliance",
+      "statement": "Over-limit fixture observation is within the APS per-action cap.",
+      "ceiling": {
+        "domain": "Effect",
+        "extent": "Verified"
+      },
+      "classification_rule": "Compare observed native value to the APS delegated spend cap; expected result is CONTRADICTED.",
+      "required_evidence": [
+        "negative cap fixture"
+      ]
+    },
+    {
+      "claim_id": "live_chain.execution_occurred",
+      "statement": "A live-chain execution occurred.",
+      "ceiling": {
+        "domain": "Execution",
+        "extent": "Declared"
+      },
+      "classification_rule": "This fixture-only procedure does not establish live execution occurrence.",
+      "required_evidence": [
+        "explicit NOT_ESTABLISHED ceiling"
+      ]
+    },
+    {
+      "claim_id": "aps.decision.single_use",
+      "statement": "The APS decision_ref was durably consumed exactly once.",
+      "ceiling": {
+        "domain": "Authorization",
+        "extent": "Declared"
+      },
+      "classification_rule": "Receipt verification does not establish durable decision consumption.",
+      "required_evidence": [
+        "explicit NOT_ESTABLISHED ceiling"
+      ]
+    },
+    {
+      "claim_id": "aps.live_currency_enforcement",
+      "statement": "APS enforced live-currency spend state.",
+      "ceiling": {
+        "domain": "Effect",
+        "extent": "Declared"
+      },
+      "classification_rule": "Fixture-local EVM mapping and synthetic spend state are not live enforcement.",
+      "required_evidence": [
+        "explicit NOT_ESTABLISHED ceiling"
+      ]
+    },
+    {
+      "claim_id": "observation.independent_external_witness",
+      "statement": "An independent external witness observed the payment execution.",
+      "ceiling": {
+        "domain": "Provenance",
+        "extent": "Declared"
+      },
+      "classification_rule": "Both payment observations are producer fixtures.",
+      "required_evidence": [
+        "explicit NOT_ESTABLISHED ceiling"
+      ]
+    },
+    {
+      "claim_id": "production.adoption",
+      "statement": "The composed system is deployed or adopted in production.",
+      "ceiling": {
+        "domain": "SystemState",
+        "extent": "Declared"
+      },
+      "classification_rule": "A bounded interoperability fixture does not establish deployment or endorsement.",
+      "required_evidence": [
+        "explicit NOT_ESTABLISHED ceiling"
+      ]
+    }
+  ],
+  "negative_controls": [
+    {
+      "control_id": "expired-temporal-negative",
+      "description": "The expired APS fixture must contradict temporal validity at the fixed reference time.",
+      "required_observations": [
+        "aps.expired.temporal_validity_at_reference=CONTRADICTED"
+      ]
+    },
+    {
+      "control_id": "over-limit-exact-call-negative",
+      "description": "The over-limit observation must contradict exact agreement with the authorized call.",
+      "required_observations": [
+        "over_limit.observation.exact_call_agreement=CONTRADICTED"
+      ]
+    },
+    {
+      "control_id": "over-limit-cap-negative",
+      "description": "The over-limit observation must contradict APS cap compliance.",
+      "required_observations": [
+        "over_limit.observation.aps_cap_compliance=CONTRADICTED"
+      ]
+    }
+  ],
+  "capture": {
+    "exact_argv": true,
+    "working_directory": true,
+    "process_start_time": true,
+    "stdout": true,
+    "stderr": true,
+    "exit_status": true,
+    "file_hash_manifest": true
+  },
+  "run_authorization": "ExplicitPreRunConsent",
+  "result_admission": "SharedRecordReviewRequired",
+  "publication_requires_separate_approval": true,
+  "limitations": [
+    "APS authenticity statements are limited to verification under the pinned fixture test keys; production identity and production key control are not established.",
+    "The formal fixture run does not establish live-chain execution, durable APS decision single-use, live-currency enforcement, an independent external witness, production adoption, or endorsement.",
+    "Mutation/corpus adequacy is excluded until discriminating fixtures exist and that stage is separately approved.",
+    "A valid reproduction record is an operator record only until separately admitted to a shared record; publication is a separate decision."
+  ],
+  "metadata": {
+    "profile": "aps-priorseal-a1",
+    "execution_commit": "cf7389097fe3a404b3557da2e72fdd8cbe962b81",
+    "execution_tag": "aps-priorseal-a1-exec-2026-10-02",
+    "aps_commit": "948f99b85343bef2c6fa677c8543965caacfc087",
+    "priorseal_commit": "d749d2691c3e6be139de4020e7b27cdafca2c428",
+    "reference_time": "2026-09-19T10:05:00.000Z",
+    "priorseal_authorization_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5974102214",
+    "aps_current_gate_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5975814456",
+    "current_gate": "APS_PRE_RUN_CONFIRMATION_REQUIRED"
+  }
+}
