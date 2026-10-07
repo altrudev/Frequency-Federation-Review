@@ -377,5 +377,9 @@
     "priorseal_authorization_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5974102214",
     "aps_current_gate_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041543648",
     "current_gate": "APS_PUBLIC_SCOPE_RUNNABLE_NO_SEPARATE_PRE_RUN_CONFIRMATION"
-  }
+  },
+  "required_consent_producers": [
+    "aeoess/agent-passport-system",
+    "imokokok/PriorSeal"
+  ]
 }
