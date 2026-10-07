@@ -43,6 +43,7 @@ ap.add_argument("--execution-repo", required=True)
 ap.add_argument("--aps-repo", required=True)
 ap.add_argument("--priorseal-repo", required=True)
 ap.add_argument("--aps-consent-ref", required=True)
+ap.add_argument("--priorseal-consent-ref", required=True)
 ap.add_argument("--out", required=True)
 args=ap.parse_args()
 
@@ -97,7 +98,7 @@ record={
 "file_hash_manifest_ref":ref(cap/"CAPTURE.sha256")},
 "claim_results":[{"claim_id":cid,"disposition":EXPECTED[cid],"evidence_refs":[ref(report_path),*[str(x) for x in claims[cid].get("evidence",[])]],"claimed_ceiling":ceiling[cid]} for cid in EXPECTED],
 "negative_control_results":[{"control_id":nid,"observation_refs":[f"{cid}=CONTRADICTED",ref(report_path)],"passed":claims[cid]["result"]=="CONTRADICTED"} for nid,cid in NEGATIVES.items()],
-"producer_consent_refs":[args.aps_consent_ref],
+"producer_consent_refs":[args.aps_consent_ref,args.priorseal_consent_ref],
 "operator_statement":"I executed the exact pinned A1 procedure under the recorded pre-run authority and captured the resulting bounded fixture-assurance record.",
 "producer_approved":False,"producer_approval_refs":[],
 "shared_record_admitted":False,"shared_record_admission_refs":[],

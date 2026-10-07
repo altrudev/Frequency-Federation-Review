@@ -374,7 +374,7 @@
     "aps_commit": "948f99b85343bef2c6fa677c8543965caacfc087",
     "priorseal_commit": "d749d2691c3e6be139de4020e7b27cdafca2c428",
     "reference_time": "2026-09-19T10:05:00.000Z",
-    "priorseal_authorization_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5974102214",
+    "priorseal_authorization_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041926615",
     "aps_current_gate_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041543648",
     "current_gate": "APS_PUBLIC_SCOPE_RUNNABLE_NO_SEPARATE_PRE_RUN_CONFIRMATION"
   },
