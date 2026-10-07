@@ -17,7 +17,7 @@ test -z "$(git -C "$A1_BASE/priorseal" status --porcelain)"
 ( cd "$A1_BASE/execution" && sha256sum -c capsules/aps-priorseal-v0.1/MANIFEST.sha256 >/dev/null )
 
 grep -q '^PRIORSEAL_PRECONFIRMED=yes$' "$A1_BASE/PRE-RUN-GATE.env"
-grep -q '^APS_PRECONFIRMED=no$' "$A1_BASE/PRE-RUN-GATE.env"
+grep -q '^APS_PRECONFIRMED=yes$' "$A1_BASE/PRE-RUN-GATE.env"
 test -f "$A1_BASE/priorseal-current-authorization.json"
 test -f "$A1_BASE/aps-current-gate.json"
 test ! -e "$A1_BASE/captures"
@@ -32,6 +32,6 @@ grep -q 'MissingExplicitConsent' /tmp/a1-repro-check.err
 printf '%s\n' 'A1_VERIFICATION_OFFER=VALID'
 printf '%s\n' 'FROZEN_INPUTS=VALID'
 printf '%s\n' 'PRIORSEAL_PRE_RUN_AUTHORITY=PRESENT'
-printf '%s\n' 'APS_PRE_RUN_AUTHORITY=MISSING'
+printf '%s\n' 'APS_PRE_RUN_AUTHORITY=PRESENT'
 printf '%s\n' 'FORMAL_EXECUTION=NOT_RUN'
-printf '%s\n' 'STATUS=READY_EXCEPT_APS_PRE_RUN_CONSENT'
+printf '%s\n' 'STATUS=READY_FOR_ONE_BOUNDED_A1_RUN'
