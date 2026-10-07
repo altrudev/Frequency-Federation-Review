@@ -2,7 +2,7 @@
 
 This directory is the first concrete instance of Frequency's Verification Offer / Reproduction Contract.
 
-It does **not** authorize a new A1 execution by itself. The existing A1 agreement still requires an affirmative APS pre-run confirmation. PriorSeal's bounded authorization is already retained; APS has explicitly withheld its pre-run confirmation until the #185 checkpoint.
+The offer does **not** authorize execution by itself. The current A1 authority is supplied by the public producer records: APS states that no separate per-run confirmation is needed for these unchanged public pinned inputs and permits its October 7 comment to serve as the execution record if required; PriorSeal states that its one bounded formal A1 authorization remains in effect and is exercisable.
 
 ## Frozen execution
 
@@ -20,28 +20,29 @@ The offer binds all 22 public claim IDs emitted by the adapter, including the ex
 - `verification-offer.json` — authoritative A1 offer instance.
 - `reproduction-record.template.json` — non-authoritative structural template. `pending:` references are placeholders and must never be submitted as a final record.
 - `build-reproduction-record.py` — post-run builder. It refuses the wrong claim set, wrong dispositions, wrong summary, non-zero runner status, or changed artifact digests.
-- `validate-readiness.sh` — pre-execution Frequency check. The expected current terminal state is `READY_EXCEPT_APS_PRE_RUN_CONSENT`.
+- `validate-readiness.sh` — pre-execution Frequency check. The expected current terminal state is `READY_FOR_ONE_BOUNDED_A1_RUN` when the retained producer authority files and frozen checkouts match the offer.
 
 ## Current authority state
 
 PriorSeal authorization:
-`https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5974102214`
+`https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041926615`
 
-Current APS gate:
-`https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5975814456`
+APS authority record:
+`https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041543648`
 
-The APS gate currently says no pre-run confirmation. Therefore the formal A1 runner must not be executed yet.
+For the unchanged frozen inputs above, APS requires no separate per-run confirmation and PriorSeal's one bounded formal A1 authorization is exercisable. A2, real-chain execution, shared-record admission and publication remain separate decisions.
 
 ## Promotion sequence
 
-When APS posts affirmative pre-run confirmation for these exact frozen inputs:
+For the one bounded formal A1 run on these exact frozen inputs:
 
-1. save the immutable APS confirmation source;
-2. update the external pre-run gate to `APS_PRECONFIRMED=yes` with that exact reference;
+1. retain the immutable APS and PriorSeal authority sources;
+2. set the external pre-run gate to `APS_PRECONFIRMED=yes` and `PRIORSEAL_PRECONFIRMED=yes` with those exact references;
 3. run the already-prepared outer capture gate once;
 4. build the final reproduction record with `build-reproduction-record.py --aps-consent-ref <immutable-ref>`;
 5. validate the generated record with Frequency;
-6. separately seek shared-record admission;
-7. separately seek publication approval if publication is desired.
+6. deliver the complete result to the three maintainers first;
+7. separately seek shared-record admission;
+8. separately seek publication approval if publication is desired.
 
 A valid reproduction record does not itself mean APS or PriorSeal endorsed the result, the federation admitted it, or publication was approved.
