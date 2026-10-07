@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "offer_id": "frequency:a1:aps-priorseal:formal-v1",
-  "issuer": "aeoess/agent-passport-system",
+  "issuer": "altrudev/Frequency-Federation-Review",
   "procedure_ref": "git:altrudev/Frequency-Federation-Review@cf7389097fe3a404b3557da2e72fdd8cbe962b81:capsules/aps-priorseal-v0.1/run-pinned.sh",
   "procedure_sha256": "4b289714de31174a917b9c0f856e1d8900828e1bcbf637cdc8e97bc2deec2e34",
   "artifacts": [
@@ -375,7 +375,7 @@
     "priorseal_commit": "d749d2691c3e6be139de4020e7b27cdafca2c428",
     "reference_time": "2026-09-19T10:05:00.000Z",
     "priorseal_authorization_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5974102214",
-    "aps_current_gate_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-5975814456",
-    "current_gate": "APS_PRE_RUN_CONFIRMATION_REQUIRED"
+    "aps_current_gate_ref": "https://github.com/aeoess/agent-governance-vocabulary/issues/177#issuecomment-6041543648",
+    "current_gate": "APS_PUBLIC_SCOPE_RUNNABLE_NO_SEPARATE_PRE_RUN_CONFIRMATION"
   }
 }
