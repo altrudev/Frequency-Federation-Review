@@ -1,0 +1,85 @@
+{
+  "schema": "frequency.federation.status-registry/v0.1",
+  "status": "PROPOSAL",
+  "projects": [
+    {
+      "project_id": "frequency",
+      "maintainer_ref": "github:altrudev",
+      "capabilities": [
+        "independent-assurance"
+      ],
+      "supported_interfaces": [
+        "edge-pack-v0.1"
+      ],
+      "limitations": [
+        "claim ceilings apply"
+      ],
+      "availability": "EXPERIMENTAL",
+      "participation_state": "TECHNICAL_PARTICIPANT",
+      "owner_confirmation_ref": "proposal:frequency-local"
+    },
+    {
+      "project_id": "example-partner",
+      "maintainer_ref": "github:example",
+      "capabilities": [
+        "example-capability"
+      ],
+      "supported_interfaces": [
+        "example-v1"
+      ],
+      "limitations": [],
+      "availability": "EXPERIMENTAL",
+      "participation_state": "LISTED",
+      "owner_confirmation_ref": "urn:owner-confirmation:example"
+    }
+  ],
+  "pilots": [
+    {
+      "pilot_id": "example-pilot-v0.1",
+      "participants": [
+        "frequency",
+        "example-partner"
+      ],
+      "pins": {
+        "frequency": "candidate",
+        "example-partner": "abc123"
+      },
+      "adapter_owner": "frequency",
+      "acceptance_criteria_refs": [
+        "urn:criteria:example"
+      ],
+      "dependencies": [],
+      "status": "PROPOSED",
+      "evidence_refs": []
+    }
+  ],
+  "decisions": [
+    {
+      "proposal_ref": "urn:proposal:example",
+      "review_deadline": "2099-01-01T00:00:00Z",
+      "approvals": [],
+      "unresolved_objections": [],
+      "decision_status": "OPEN",
+      "decision_record_ref": null,
+      "retroactive": false
+    }
+  ],
+  "commercial_delivery": [
+    {
+      "offering_id": "example-offering",
+      "status": "NOT_ACTIVE",
+      "component_project_ids": [
+        "frequency",
+        "example-partner"
+      ]
+    }
+  ],
+  "semantics": {
+    "listing_is_membership": false,
+    "technical_participation_is_active_membership": false,
+    "active_participation_requires_explicit_opt_in": true,
+    "registry_is_source_of_authority": false,
+    "github_evidence_remains_source_of_truth": true,
+    "economic_formula_defined": false
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frequency.local/schema/federation-attribution-receipt-v0.1.schema.json",
+  "title": "Federation Attribution Receipt v0.1 Proposal",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "receipt_id",
+    "action_ref",
+    "components",
+    "claim_ceiling"
+  ],
+  "properties": {
+    "schema": {
+      "const": "frequency.federation.attribution-receipt/v0.1"
+    },
+    "status": {
+      "const": "PROPOSAL"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "action_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflow_ref": {
+      "type": "string"
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "artifact_ref",
+          "artifact_sha256",
+          "role",
+          "evidence_refs",
+          "attestation"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "role": {
+            "enum": [
+              "artifact",
+              "authority",
+              "evidence",
+              "execution",
+              "identity",
+              "observation",
+              "policy",
+              "verification"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "attestation": {
+            "type": "object",
+            "required": [
+              "status",
+              "attester_ref",
+              "statement_ref"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "UNVERIFIED",
+                  "VERIFIED"
+                ]
+              },
+              "attester_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statement_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verification_evidence_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "status": {
+                      "const": "VERIFIED"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "verification_evidence_ref"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claim_ceiling": {
+      "const": {
+        "economic.value": "NOT_ESTABLISHED",
+        "payment.entitlement": "NOT_ESTABLISHED",
+        "causal.importance": "NOT_ESTABLISHED",
+        "external.execution.occurred": "NOT_ESTABLISHED"
+      }
+    }
+  },
+  "additionalProperties": false
+}
