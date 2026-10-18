@@ -39,10 +39,14 @@ For the one bounded formal A1 run on these exact frozen inputs:
 1. retain the immutable APS and PriorSeal authority sources;
 2. set the external pre-run gate to `APS_PRECONFIRMED=yes` and `PRIORSEAL_PRECONFIRMED=yes` with those exact references;
 3. run the already-prepared outer capture gate once;
-4. build the final reproduction record with `build-reproduction-record.py --aps-consent-ref <immutable-ref>`;
+4. build the final reproduction record with `build-reproduction-record.py --aps-consent-ref <immutable-aps-ref> --priorseal-consent-ref <immutable-priorseal-ref> (along with the required --offer, --capture-dir, --execution-repo, --aps-repo, --priorseal-repo, and --out arguments)`;
 5. validate the generated record with Frequency;
 6. deliver the complete result to the three maintainers first;
 7. separately seek shared-record admission;
 8. separately seek publication approval if publication is desired.
 
 A valid reproduction record does not itself mean APS or PriorSeal endorsed the result, the federation admitted it, or publication was approved.
+
+## Terminology
+
+See [Federation technical glossary](../../docs/FEDERATION-TECHNICAL-GLOSSARY.md) for mappings from Frequency/A1 terms to established engineering and standards terminology. These are descriptive correspondences, not claims of certification or normative equivalence.
