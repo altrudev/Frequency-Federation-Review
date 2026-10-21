@@ -1,5 +1,4 @@
 import os,pathlib,stat,tempfile,unittest,sys
-sys.path[:0]=["/home/ubuntu/frequency-refund-integration-radial"]
 from refund_broker import Broker
 class SocketConfigTests(unittest.TestCase):
  def test_explicit_client_gid_socket_mode(self):

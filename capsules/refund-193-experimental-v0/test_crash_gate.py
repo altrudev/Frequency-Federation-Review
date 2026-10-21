@@ -1,5 +1,4 @@
 import pathlib,sys,tempfile,unittest
-sys.path[:0]=["/home/ubuntu/frequency-refund-integration-radial"]
 from test_support.admission_gateway import RefundAdmissionGateway,AdmissionDenied
 from refund_sandbox import RefundExecutionEngine
 

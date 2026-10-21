@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "EXPORT-DIFFERENCES.md",
-      "sha256": "92846d036cadd29133dbc1168d3f94446858ce62ec5dd9c83df3253bf895bbab"
+      "sha256": "dd5c0d41281bd176cdf4c38977de5d231a156cead9112bdf6022ef2dab8748e0"
     },
     {
       "path": "README.md",
@@ -104,7 +104,7 @@
     },
     {
       "path": "test_crash_gate.py",
-      "sha256": "1f764b1a50db6ef717983a1b0975d213c1da690b28a641667c36410552d6f190"
+      "sha256": "3baae7a51f5538a2dc88fa3fccaf72e0f9c89aa184c385fc0888175e85d937ce"
     },
     {
       "path": "test_cross_native.py",
@@ -120,11 +120,11 @@
     },
     {
       "path": "test_gateway.py",
-      "sha256": "aa26cc6ad713f12783b521889586239c694ddc04ee7dc1f9e104be682baaaaa0"
+      "sha256": "c94f93bbd1c8f4b59049aca3ad331b6f21bd2cf4e5bf727033fb66e32cf62721"
     },
     {
       "path": "test_isolation_preflight.py",
-      "sha256": "9bc256a0fbf1ab366a750cce655599df680a8f3e02feee7ef6b5ff75ad96e97b"
+      "sha256": "1186a8db6ecf0b4782f00059bb7951cb7d29269d0dd9957bd56c520dda036571"
     },
     {
       "path": "test_mid_dispatch_sigkill.py",
@@ -160,7 +160,7 @@
     },
     {
       "path": "test_socket_config.py",
-      "sha256": "c6516dfa44a1d735f2800289f0162601b9891d0020ef382ae6445b80e36d028a"
+      "sha256": "c0bfe9d0c49b820171a1ed0d66ec355f1a43f2b28ceaebfe8fc4bd42e9791488"
     },
     {
       "path": "test_support/__init__.py",

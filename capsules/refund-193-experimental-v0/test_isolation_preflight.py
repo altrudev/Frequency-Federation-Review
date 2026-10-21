@@ -7,6 +7,6 @@ class IsolationPreflightTests(unittest.TestCase):
   self.assertFalse(next(f for f in result["findings"] if f["id"]=="OS-IDENTITY")["pass"])
   self.assertFalse(next(f for f in result["findings"] if f["id"]=="BROKER-ENTRYPOINT")["pass"])
  def test_unprotected_user_home_target_denied(self):
-  result=check("/home/ubuntu/frequency-refund-integration-radial")
+  result=check("/home/ubuntu/refund-review-fixture")
   self.assertEqual(result["verdict"],"HOLD")
   self.assertFalse(next(f for f in result["findings"] if f["id"]=="STATE-LOCATION")["pass"])
