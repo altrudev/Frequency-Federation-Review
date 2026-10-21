@@ -1,0 +1,206 @@
+{
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "db2fceb7f73ec35ad6b24b6bd1a4f2a52cddc62d0381a1dae2e8d86a5001653b"
+    },
+    {
+      "path": ".gitmodules",
+      "sha256": "794c1641210415478696e99b3426c3a85970a79960948af7dd95258329fb04f8"
+    },
+    {
+      "path": "FULL-CODE-AUDIT-DDC-RADIAL-20261020.md",
+      "sha256": "9f67137ffc0c172744f4d28938ef2d65370e37f79a9a169e9413f8fc3153d9f6"
+    },
+    {
+      "path": "P0-REPAIR-DDC-RADIAL-20261020.md",
+      "sha256": "b487b9e802b5456eb1e2c63fa3cc21d41b3a38a6bea49eb201580b2c3db1e729"
+    },
+    {
+      "path": "P1-REPAIR-DDC-RADIAL-20261020.md",
+      "sha256": "f1b0ebe131d0b81ca94aa74412047ef7759732f7b279791931ec4b84ca1909bb"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3b7d5ae2903928e617cace302223ba737a1dfd46e52d37dc2e65f556e8dccf94"
+    },
+    {
+      "path": "RUNTIME-PINS.json",
+      "sha256": "7fbca5c72ab20cfe5db9128f7b7886666eb7e0f4f937f3722b88ba794fcc8e6d"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "f9f606c500dfd4136c26ac3aeeb3409864c54739b0437a802cafcfd2726464fe"
+    },
+    {
+      "path": "aps-runtime/make-test-fixture.ts",
+      "sha256": "4ddc0b7629195eef9127c138d399b0752c7401ca9ffcf15ebf41841160ec50e5"
+    },
+    {
+      "path": "aps-runtime/package-lock.json",
+      "sha256": "17bc2da371445b8e2801c6a509918d4add0ef1e77de3b2a07f8fe5e508809271"
+    },
+    {
+      "path": "aps-runtime/package.json",
+      "sha256": "ea8445ba23c9950e2194bb1f0487e82b90fdcb5740ab6c3f5389670e0adc70e3"
+    },
+    {
+      "path": "aps-runtime/verify-refund.ts",
+      "sha256": "79473d361903aea5ba06168cb63f859dfc04de179059d052d12683f816453dde"
+    },
+    {
+      "path": "aps_native_adapter.py",
+      "sha256": "4a18023923296fb53f61b29efd61a66140ae857776579c653f8babef39a27bd1"
+    },
+    {
+      "path": "broker_native_verifier.py",
+      "sha256": "17e2aaa8526ab6ff3c4b5d8ef5fa8f1e4909440808fe148fe32ef7eba6e0be33"
+    },
+    {
+      "path": "broker_reconcile.py",
+      "sha256": "727dea6826d7e9163e1c67ea0c63e319d34069f7cefe413f721cafcf1ed6c262"
+    },
+    {
+      "path": "deployment_path_audit.py",
+      "sha256": "a6b1fb250d7eaec5fdc0aac21d84c8510e54bea3850d02646fe4a19e03c5589f"
+    },
+    {
+      "path": "frequency-refund-broker.staged.service",
+      "sha256": "c815d2a4ef8ce7e6ee76e0a845552ac42e14b826418e7d3ac246e3535fa168a6"
+    },
+    {
+      "path": "operator-isolation-preflight.sh",
+      "sha256": "f38eda9cc94aacecac53133020296cdb2cdc7392074ca5475aba27f632941e1f"
+    },
+    {
+      "path": "os_isolation_preflight.py",
+      "sha256": "a7ea9a835ef1359dfceb3de96c46931de72682a063b3659a2869a4e67533adf6"
+    },
+    {
+      "path": "pic_native_adapter.py",
+      "sha256": "78d9a08d05c7997ea2e019ad1624feaf7d12528c8be2161677e2c41445c5deac"
+    },
+    {
+      "path": "pic_test_fixture.py",
+      "sha256": "c31aae0926199726bdc2d8c8c0f8dd003c65b7046b46c3f3f35e50f819c246bc"
+    },
+    {
+      "path": "provisional_handoff_193.py",
+      "sha256": "ed1839e3522c0c4777ecae695f25a9edd27886dd506c08263c3c2fa7a80dca45"
+    },
+    {
+      "path": "refund_broker.py",
+      "sha256": "96f2953a418756fb0cb066a26e731f835194e7d813fb805a2ad88934826739f3"
+    },
+    {
+      "path": "refund_broker_entrypoint.py",
+      "sha256": "9c9a813da8c3ba1f4771dfab3b496e49619a2df6fca987654fdb7da1135a6d22"
+    },
+    {
+      "path": "refund_sandbox.py",
+      "sha256": "344d8e0a7f8fb292d5cb69f6fa8f975815386594893c84f781aca693e3db8e74"
+    },
+    {
+      "path": "requirements-runtime.txt",
+      "sha256": "156c05f37fbfd3e91191de40fe37cae11b537f27236f75f6caf613918c6657f7"
+    },
+    {
+      "path": "runtime-config.example.json",
+      "sha256": "2464802b63f8521cc1f944e01219f2f874ce5ba465166462a14a3f93993095c8"
+    },
+    {
+      "path": "test_broker_boundary.py",
+      "sha256": "81d8e8c2518f78f6f46c5d9e983290450587801d5e35bdc093afdbd8efc584d1"
+    },
+    {
+      "path": "test_contract_193.py",
+      "sha256": "26545c8f9f638add9c2fa2cd49c5c006bf1f27c47ac2bab9a1c7f7fd4cb2a73b"
+    },
+    {
+      "path": "test_crash_gate.py",
+      "sha256": "1f764b1a50db6ef717983a1b0975d213c1da690b28a641667c36410552d6f190"
+    },
+    {
+      "path": "test_cross_native.py",
+      "sha256": "ba2560598a1704bf941209a04066070510f18124404f115f2ddb2332f3fcac20"
+    },
+    {
+      "path": "test_deployment_path_audit.py",
+      "sha256": "8e9bd70ba9ed4d3f922c6aa08f04876b0244f046009487d042d3b0bd9316550e"
+    },
+    {
+      "path": "test_entrypoint_config.py",
+      "sha256": "c64796e76ccf104a71951d67f41621ad2906965f031448848de94d5c31fe42c7"
+    },
+    {
+      "path": "test_gateway.py",
+      "sha256": "aa26cc6ad713f12783b521889586239c694ddc04ee7dc1f9e104be682baaaaa0"
+    },
+    {
+      "path": "test_isolation_preflight.py",
+      "sha256": "9bc256a0fbf1ab366a750cce655599df680a8f3e02feee7ef6b5ff75ad96e97b"
+    },
+    {
+      "path": "test_mid_dispatch_sigkill.py",
+      "sha256": "9dd49543ec1cfca011e47372695ab2bd21dc37f62f52f6711b3602125a8e2f6b"
+    },
+    {
+      "path": "test_native_broker.py",
+      "sha256": "abae44f7570147dc5f70fe7f9a720a83abfa5f66419b4c77241446b05d8cf393"
+    },
+    {
+      "path": "test_native_pic_gateway.py",
+      "sha256": "0c6a01e94c4b56f83271d2a7517a3e3c345cfa3e1faa3fe8a72cee574cd7de96"
+    },
+    {
+      "path": "test_pic_native.py",
+      "sha256": "0e739414406d0f0c402f00b0bfc937b675380370f6434eac274da1942251f629"
+    },
+    {
+      "path": "test_process_restart.py",
+      "sha256": "ba2465dc3bab70ee30eb5612e78d975ddceffd14b26d3ffbec64e352c033e80e"
+    },
+    {
+      "path": "test_provisional_handoff_193.py",
+      "sha256": "2c719dc67193002b920caaa4a53a2a424d2b5d2d10fac07e2aae8ed2a21d72da"
+    },
+    {
+      "path": "test_reconcile.py",
+      "sha256": "c5ae1ea1b25c4916923418a71009397cfdff1d24aed0cc23f6baeed1b5e23a0b"
+    },
+    {
+      "path": "test_signed_broker_193.py",
+      "sha256": "b74911625f9bf73df42db46e55916973f509958d78c558edefe78ea08a2d0b7c"
+    },
+    {
+      "path": "test_socket_config.py",
+      "sha256": "c6516dfa44a1d735f2800289f0162601b9891d0020ef382ae6445b80e36d028a"
+    },
+    {
+      "path": "test_support/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test_support/admission_gateway.py",
+      "sha256": "38d94e0eff0fdb5dc5c0ef009a562ce5f79a797604f28651f71361af0a52a3a5"
+    }
+  ],
+  "observed_result": "55 tests OK on VPS 2026-10-21; see captured-test-output.txt",
+  "runtime_pins": {
+    "aps_npm": {
+      "agent-passport-system": "7.2.1",
+      "tsx": "4.23.15"
+    },
+    "aps_source_reference": "bbd5a7d4cd77b5068b1023ccd418682ba8924109",
+    "node": "24",
+    "pic_sdk_source_reference": "ccb1dbb20c2283d9e20c7ade18374dc700c48097",
+    "provider_profile": "local-simulator-only",
+    "python": "3.14",
+    "schema": "frequency-refund-runtime-pins/1"
+  },
+  "schema": "altru-refund-193-review-evidence/1",
+  "scope": "local simulator only; experimental handoff; not Federation conformance",
+  "source_branch": "review/refund-193-conformance-fixtures",
+  "source_commit": "7077f72fa1988f8af889507bd4c2ffae783b1ed7",
+  "test_command": "env -u PYTHONPATH .runtime-venv-test/bin/python -m unittest discover -q"
+}

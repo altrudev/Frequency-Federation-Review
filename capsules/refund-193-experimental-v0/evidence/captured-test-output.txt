@@ -1,0 +1,5 @@
+----------------------------------------------------------------------
+Ran 55 tests in 57.862s
+
+OK
+PIC_NATIVE_VERIFIER: signed=PASS altered_amount=DENY altered_payment=DENY
