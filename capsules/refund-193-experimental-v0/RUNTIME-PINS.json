@@ -1,0 +1,9 @@
+{
+  "schema": "frequency-refund-runtime-pins/1",
+  "python": "3.14",
+  "node": "24",
+  "aps_npm": {"agent-passport-system": "7.2.1", "tsx": "4.23.15"},
+  "aps_source_reference": "bbd5a7d4cd77b5068b1023ccd418682ba8924109",
+  "pic_sdk_source_reference": "ccb1dbb20c2283d9e20c7ade18374dc700c48097",
+  "provider_profile": "local-simulator-only"
+}
