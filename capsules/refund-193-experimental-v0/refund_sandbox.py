@@ -329,7 +329,8 @@ class RefundExecutionEngine:
                         {"attempt_id": attempt_id, "kind": "reconcile", "status": "unresolved"}
                     )
                 else:
-                    if effect.get("arguments_digest") != record["arguments_digest"]:
+                    if (effect.get("operation_id") != record["operation_id"]
+                            or effect.get("arguments_digest") != record["arguments_digest"]):
                         raise BindingMismatch("observed-effect-binding-mismatch")
                     record["status"] = "observed_success"
                     record["effect_ref"] = effect["effect_ref"]

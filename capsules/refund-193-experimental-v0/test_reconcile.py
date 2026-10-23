@@ -39,6 +39,19 @@ class ReconcileTests(unittest.TestCase):
   r=inspect_claim(self.b,"tampered")
   self.assertEqual(r["matching_operations"][0]["local_effect_integrity"],"local_effect_binding_mismatch")
   self.assertFalse(r["dispatch_attempted"])
+ def test_reconcile_does_not_promote_mismatched_operation_identity(self):
+  from refund_sandbox import BindingMismatch
+  op={"schema":"refund-execution/0.1","operation_id":"op-reconcile","tool":"refund","arguments":{"payment_id":"pay_B","amount_minor":4000,"currency":"EUR"},"approval_ref":"approval-reconcile","aps_evidence_ref":"aps","pic_evidence_ref":"pic"}
+  self.b.engine.execute(op,lose_response_after_commit=True)
+  record=self.b.engine._load_record(op["operation_id"])
+  effects_path=self.b.engine.simulator.effects_path
+  effects=json.loads(effects_path.read_text())
+  effects[record["idempotency_key"]]["operation_id"]="unexpected-other-operation"
+  effects_path.write_text(json.dumps(effects))
+  with self.assertRaisesRegex(BindingMismatch,"observed-effect-binding-mismatch"):
+   self.b.engine.reconcile(op["operation_id"])
+  self.assertEqual(self.b.engine._load_record(op["operation_id"])["status"],"unresolved")
+  self.assertEqual(self.b.engine.simulator.effect_count(),1)
  def test_read_only_does_not_recover_or_release(self):
   self.claim("unknown")
   before=self.b.journal.execute("SELECT status FROM claims WHERE approval='unknown'").fetchone()
