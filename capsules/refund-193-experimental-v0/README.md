@@ -2,7 +2,7 @@
 
 Copyright 2026 Valentyn Rukhaylo / Altru.dev. Review-only; implementation rights reserved under repository `REVIEW-ONLY-NOTICE.md`. This code is **not** an approved Federation standard, a signed APS admission implementation, or a production payment executor. `provisional_handoff_193.py` defines an Altru sandbox-only Ed25519 envelope.
 
-Source/tested revision: `7077f72fa1988f8af889507bd4c2ffae783b1ed7`; evidence revision: `9d96ec9e85dee7d0ed54f1aa462b56dbc3f4c81f`. Review export differs only by removal of the VPS-specific absolute `sys.path` in `test_broker_boundary.py` and packaging (listed in `EXPORT-DIFFERENCES.md`). The 55-test captured outcome is from the source checkout, **not** a fresh public-clone run.
+Source/tested revision: `7077f72fa1988f8af889507bd4c2ffae783b1ed7`; evidence revision: `9d96ec9e85dee7d0ed54f1aa462b56dbc3f4c81f`. Review export differs only by removal of the VPS-specific absolute `sys.path` in `test_broker_boundary.py` and packaging (listed in `EXPORT-DIFFERENCES.md`). The historical 55-test captured outcome is from the source checkout, **not** a fresh public-clone run. The later published review head `0843b68` was independently reproduced from a fresh checkout on 2026-10-23: Python 3.14.4, Node 24.21.0, pinned PIC commit `ccb1dbb`, `npm ci` and `pip install -r requirements-runtime.txt`; `python -m unittest discover -q`: **61 tests, 0 failures**. These are synthetic local tests, not independent Federation certification.
 
 ## Reproduce (synthetic only)
 
