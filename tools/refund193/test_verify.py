@@ -1,0 +1,69 @@
+import hashlib
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from verify import assess, parse_json, InvalidEvidence, digest
+
+IDS = dict(workflow_id="w", admission_issuer="issuer", provider_namespace="sim", operation_id="op")
+ARGS = dict(payment_id="pay_A", amount_minor=4000, currency="EUR")
+REF = "sha256:" + "a" * 64
+
+class EvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.records = {
+            "admission": dict(IDS, arguments=ARGS, admission_ref=REF, state="committed"),
+            "attempt": dict(IDS, attempt_id="t1", admission_ref=REF, arguments=ARGS, dispatch_status="sent"),
+            "effect": dict(IDS, attempt_id="t1", effect_id="e1", admission_ref=REF, arguments=ARGS, outcome="succeeded"),
+            "observation": dict(IDS, attempt_id="t1", effect_id="e1", observed_effect=True, verdict="observed_success", cutoff="2026-10-25T12:00:00Z")
+        }
+
+    def verify(self):
+        files = {}
+        for name, data in self.records.items():
+            raw = json.dumps(data, sort_keys=True).encode()
+            (self.root / (name + ".json")).write_bytes(raw)
+            files[name] = {"path": name + ".json", "sha256": "sha256:" + hashlib.sha256(raw).hexdigest()}
+        return assess({"schema": "altru-refund-evidence-review/1", "files": files}, self.root)
+
+    def test_valid_synthetic_still_not_established(self):
+        x = self.verify()
+        self.assertEqual(x["verdict"], "NOT_ESTABLISHED")
+        self.assertFalse(x["execution_authorized"])
+        self.assertTrue(all(c == "PASS" for c in x["checks"].values()))
+
+    def test_mismatched_effect_operation(self):
+        self.records["effect"]["operation_id"] = "other"
+        self.assertEqual(self.verify()["verdict"], "FAIL")
+
+    def test_mismatched_attempt(self):
+        self.records["observation"]["attempt_id"] = "other"
+        self.assertEqual(self.verify()["verdict"], "FAIL")
+
+    def test_changed_effect_args(self):
+        self.records["effect"]["arguments"] = dict(ARGS, amount_minor=3999)
+        self.assertEqual(self.verify()["verdict"], "FAIL")
+
+    def test_boolean_amount(self):
+        self.records["admission"]["arguments"] = dict(ARGS, amount_minor=True)
+        self.assertEqual(self.verify()["verdict"], "FAIL")
+
+    def test_no_effect_claim(self):
+        self.records["observation"]["observed_effect"] = False
+        self.assertEqual(self.verify()["verdict"], "FAIL")
+
+    def test_duplicate_keys(self):
+        with self.assertRaises(InvalidEvidence):
+            parse_json(b'{"operation_id":"a","operation_id":"b"}')
+
+    def test_file_tampering(self):
+        self.verify()
+        path = self.root / "effect.json"
+        path.write_text("tamper")
+        self.assertNotEqual(digest(path.read_bytes()), "sha256:" + hashlib.sha256(json.dumps(self.records["effect"], sort_keys=True).encode()).hexdigest())
+
+if __name__ == "__main__":
+    unittest.main()
