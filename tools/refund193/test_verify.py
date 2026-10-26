@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from verify import assess, parse_json, InvalidEvidence, digest
+from verify import assess, parse_json, InvalidEvidence, digest, exact_args
 
 IDS = dict(workflow_id="w", admission_issuer="issuer", provider_namespace="sim", operation_id="op")
 ARGS = dict(payment_id="pay_A", amount_minor=4000, currency="EUR")
@@ -62,8 +62,26 @@ class EvidenceTests(unittest.TestCase):
     def test_file_tampering(self):
         self.verify()
         path = self.root / "effect.json"
+        expected = digest(path.read_bytes())
         path.write_text("tamper")
-        self.assertNotEqual(digest(path.read_bytes()), "sha256:" + hashlib.sha256(json.dumps(self.records["effect"], sort_keys=True).encode()).hexdigest())
+        self.assertNotEqual(digest(path.read_bytes()), expected)
+
+    def test_bool_equals_integer_is_rejected(self):
+        self.assertFalse(exact_args(ARGS, dict(ARGS, amount_minor=True)))
+        self.assertFalse(exact_args(dict(ARGS, amount_minor=1), dict(ARGS, amount_minor=1.0)))
+
+    def test_unexpected_file_manifest_key(self):
+        raw = json.dumps(self.records["admission"]).encode()
+        files = {name: {"path": name + ".json", "sha256": digest(raw)}
+                 for name in self.records}
+        files["extra"] = {"path": "extra.json", "sha256": digest(raw)}
+        with self.assertRaises(InvalidEvidence):
+            assess({"schema": "altru-refund-evidence-review/1", "files": files}, self.root)
+
+    def test_raises_on_extra_top_level_manifest_field(self):
+        with self.assertRaises(InvalidEvidence):
+            assess({"schema": "altru-refund-evidence-review/1", "files": {},
+                    "authorized": True}, self.root)
 
 if __name__ == "__main__":
     unittest.main()

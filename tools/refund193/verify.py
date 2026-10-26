@@ -40,6 +40,13 @@ def validate_args(args):
     require(type(args["amount_minor"]) is int and 0 < args["amount_minor"] <= 2**53-1, "amount_invalid")
     require(args["currency"] == "EUR", "currency_invalid")
 
+def exact_args(left, right):
+    """Avoid Python's bool == int and int == float coercion during binding."""
+    return (type(left) is dict and type(right) is dict
+            and set(left) == ARG_FIELDS and set(right) == ARG_FIELDS
+            and all(type(left[k]) is type(right[k]) and left[k] == right[k]
+                    for k in ARG_FIELDS))
+
 def assess(manifest, bundle_dir):
     """Never grants permission to dispatch; each verdict is only about retained evidence."""
     reasons = []
@@ -51,9 +58,9 @@ def assess(manifest, bundle_dir):
         except (InvalidEvidence, OSError, ValueError, TypeError, KeyError) as exc:
             checks[name] = "FAIL"
             reasons.append(name + ":" + str(exc))
-    require(type(manifest) is dict and manifest.get("schema") == "altru-refund-evidence-review/1", "manifest_schema_invalid")
+    require(type(manifest) is dict and set(manifest) == {"schema", "files"} and manifest["schema"] == "altru-refund-evidence-review/1", "manifest_schema_invalid")
     files = manifest.get("files")
-    require(type(files) is dict and files, "files_missing")
+    require(type(files) is dict and set(files) == {"admission", "attempt", "effect", "observation"}, "files_shape_invalid")
     records = {}
     for name in ("admission", "attempt", "effect", "observation"):
         def load(name=name):
@@ -84,8 +91,8 @@ def assess(manifest, bundle_dir):
     check("identity_bindings", identities)
     def arguments():
         validate_args(a.get("arguments"))
-        require(t.get("arguments") == a["arguments"], "attempt_arguments_mismatch")
-        require(e.get("arguments") == a["arguments"], "effect_arguments_mismatch")
+        require(exact_args(t.get("arguments"), a["arguments"]), "attempt_arguments_mismatch")
+        require(exact_args(e.get("arguments"), a["arguments"]), "effect_arguments_mismatch")
         require(type(a.get("admission_ref")) is str and bool(HEX.fullmatch(a["admission_ref"])), "admission_ref_invalid")
         require(t.get("admission_ref") == a["admission_ref"], "attempt_admission_ref_mismatch")
         require(e.get("admission_ref") == a["admission_ref"], "effect_admission_ref_mismatch")

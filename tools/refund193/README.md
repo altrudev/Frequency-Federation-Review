@@ -11,3 +11,5 @@ Manifest schema `altru-refund-evidence-review/1` contains a `files` object with 
 This is **not** the Federation #193 signed-admission contract, a PIC/APS verifier, a production dispatch gate, or a claim that records are authentic. Even all matching synthetic records return `NOT_ESTABLISHED`, because trusted signing evidence, key roles, revocation-at-dispatch, exact producer time, durable effects, report-cutoff semantics and independent custody are not proven. No new dispatch, remote command or payment API is used. The verifier neither imports nor exposes private Frequency Core.
 
 Before treating an independent reader result as established, frozen #193 producer contracts must separately verify signature/trust/time, native PIC/APS bindings, idempotency derivation, historical dispatch times and observation provenance. No equivalence between this review schema and `refund-sandbox-contract/review-2026-10-23` is claimed.
+
+Strict typed equality and closed manifest keys are enforced; connected producer evidence remains unverified.
