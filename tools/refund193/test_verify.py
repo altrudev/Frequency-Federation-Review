@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from verify import assess, parse_json, InvalidEvidence, digest, exact_args
+from verify import assess, parse_json, InvalidEvidence, digest, exact_args, read_regular_nofollow
 
 IDS = dict(workflow_id="w", admission_issuer="issuer", provider_namespace="sim", operation_id="op")
 ARGS = dict(payment_id="pay_A", amount_minor=4000, currency="EUR")
@@ -65,6 +65,29 @@ class EvidenceTests(unittest.TestCase):
         expected = digest(path.read_bytes())
         path.write_text("tamper")
         self.assertNotEqual(digest(path.read_bytes()), expected)
+
+    def test_symlinked_record_denied(self):
+        self.verify()
+        source = self.root / "effect.json"
+        backup = self.root / "outside.json"
+        source.rename(backup)
+        source.symlink_to(backup)
+        with self.assertRaises(OSError):
+            read_regular_nofollow(self.root, "effect.json")
+
+    def test_nonsense_cutoff_rejected(self):
+        self.records["observation"]["cutoff"] = "gibberish"
+        self.assertEqual(self.verify()["checks"]["recorded_status"], "FAIL")
+
+    def test_invalid_calendar_cutoff_rejected(self):
+        self.records["observation"]["cutoff"] = "2026-02-30T12:00:00Z"
+        self.assertEqual(self.verify()["checks"]["recorded_status"], "FAIL")
+
+    def test_fifo_is_denied_without_blocking(self):
+        import os
+        os.mkfifo(self.root / "fifo.json")
+        with self.assertRaises(InvalidEvidence):
+            read_regular_nofollow(self.root, "fifo.json")
 
     def test_bool_equals_integer_is_rejected(self):
         self.assertFalse(exact_args(ARGS, dict(ARGS, amount_minor=True)))

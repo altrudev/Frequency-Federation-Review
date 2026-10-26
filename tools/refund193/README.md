@@ -13,3 +13,7 @@ This is **not** the Federation #193 signed-admission contract, a PIC/APS verifie
 Before treating an independent reader result as established, frozen #193 producer contracts must separately verify signature/trust/time, native PIC/APS bindings, idempotency derivation, historical dispatch times and observation provenance. No equivalence between this review schema and `refund-sandbox-contract/review-2026-10-23` is claimed.
 
 Strict typed equality and closed manifest keys are enforced; connected producer evidence remains unverified.
+
+## P0 file and cutoff hardening
+
+Evidence records must be single-link regular files within the designated bundle directory. The reader refuses final-component symlinks, FIFO/device entries and files exceeding 1 MiB, and opens with no-follow semantics on Linux. The cutoff must be a valid UTC whole-second timestamp. A valid timestamp does not establish the observation's chronological relation to a producer's actual dispatch time; that requires independently retained and authenticated producer timing evidence, outside this synthetic format. Untrusted bundle directory ancestors, concurrent hostile filesystem mutation and provenance of the supplied manifest are not established by this utility; use a trusted read-only snapshot for adversarial evidence.

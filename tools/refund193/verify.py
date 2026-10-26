@@ -3,6 +3,9 @@
 import argparse
 import hashlib
 import json
+import os
+import stat
+from datetime import datetime, timezone
 import re
 import sys
 from pathlib import Path
@@ -47,6 +50,36 @@ def exact_args(left, right):
             and all(type(left[k]) is type(right[k]) and left[k] == right[k]
                     for k in ARG_FIELDS))
 
+def read_regular_nofollow(directory, filename):
+    """Read only a bounded regular file, refusing symlinks even on the last component."""
+    base = Path(directory)
+    require(not base.is_symlink() and base.is_dir(), "bundle_directory_invalid")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    dirfd = os.open(base, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+    try:
+        fd = os.open(filename, flags, dir_fd=dirfd)
+        try:
+            info = os.fstat(fd)
+            require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1, "not_single_regular_file")
+            require(info.st_size <= 1024 * 1024, "file_too_large")
+            with os.fdopen(os.dup(fd), "rb") as reader:
+                raw = reader.read(1024 * 1024 + 1)
+            require(len(raw) <= 1024 * 1024, "file_too_large")
+            return raw
+        finally:
+            os.close(fd)
+    finally:
+        os.close(dirfd)
+
+def parse_cutoff(value):
+    require(type(value) is str and re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value), "cutoff_format_invalid")
+    try:
+        parsed = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    except ValueError as exc:
+        raise InvalidEvidence("cutoff_calendar_invalid") from exc
+    return parsed
+
 def assess(manifest, bundle_dir):
     """Never grants permission to dispatch; each verdict is only about retained evidence."""
     reasons = []
@@ -69,7 +102,7 @@ def assess(manifest, bundle_dir):
             path = entry["path"]
             require(type(path) is str and path in (name + ".json",), "file_path_not_allowlisted")
             require(type(entry["sha256"]) is str and HEX.fullmatch(entry["sha256"]), "hash_format_invalid")
-            raw = (bundle_dir / path).read_bytes()
+            raw = read_regular_nofollow(bundle_dir, path)
             require(digest(raw) == entry["sha256"], "file_digest_mismatch")
             records[name] = parse_json(raw)
             require(type(records[name]) is dict, "record_not_object")
@@ -103,7 +136,7 @@ def assess(manifest, bundle_dir):
         require(e.get("outcome") == "succeeded", "effect_not_successful")
         require(o.get("observed_effect") is True, "effect_not_observed")
         require(o.get("verdict") == "observed_success", "observation_not_success")
-        require(type(o.get("cutoff")) is str and o["cutoff"], "cutoff_missing")
+        parse_cutoff(o.get("cutoff"))
     check("recorded_status", status)
     # No trusted PIC/APS verification, signing-key custody, temporal authority, or
     # independent producer attestation is established by this synthetic manifest.
