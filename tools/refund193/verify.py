@@ -14,6 +14,12 @@ HEX = re.compile(r"sha256:[0-9a-f]{64}\Z")
 ID = re.compile(r"[A-Za-z0-9_-]+\Z")
 FIELDS = ("workflow_id", "admission_issuer", "provider_namespace", "operation_id")
 ARG_FIELDS = {"payment_id", "amount_minor", "currency"}
+RECORD_FIELDS = {
+    "admission": set(FIELDS) | {"arguments", "admission_ref", "state"},
+    "attempt": set(FIELDS) | {"attempt_id", "admission_ref", "arguments", "dispatch_status"},
+    "effect": set(FIELDS) | {"attempt_id", "effect_id", "admission_ref", "arguments", "outcome"},
+    "observation": set(FIELDS) | {"attempt_id", "effect_id", "observed_effect", "verdict", "cutoff"},
+}
 
 class InvalidEvidence(ValueError):
     pass
@@ -105,7 +111,7 @@ def assess(manifest, bundle_dir):
             raw = read_regular_nofollow(bundle_dir, path)
             require(digest(raw) == entry["sha256"], "file_digest_mismatch")
             records[name] = parse_json(raw)
-            require(type(records[name]) is dict, "record_not_object")
+            require(type(records[name]) is dict and set(records[name]) == RECORD_FIELDS[name], "record_schema_invalid")
         check("file_" + name, load)
     if len(records) != 4:
         return {"schema": "altru-refund-evidence-review-result/1", "verdict": "FAIL", "checks": checks, "reasons": reasons, "execution_authorized": False}
@@ -137,7 +143,11 @@ def assess(manifest, bundle_dir):
         require(o.get("observed_effect") is True, "effect_not_observed")
         require(o.get("verdict") == "observed_success", "observation_not_success")
         parse_cutoff(o.get("cutoff"))
-    check("recorded_status", status)
+    check("recorded_claim_shape", status)
+    # A timestamp string alone cannot prove its order relative to a producer event.
+    # Neither the manifest nor these synthetic records authenticate timing.
+    checks["temporal_relationship"] = "NOT_ESTABLISHED"
+    checks["producer_authenticity"] = "NOT_ESTABLISHED"
     # No trusted PIC/APS verification, signing-key custody, temporal authority, or
     # independent producer attestation is established by this synthetic manifest.
     if reasons:

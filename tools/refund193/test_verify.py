@@ -33,7 +33,11 @@ class EvidenceTests(unittest.TestCase):
         x = self.verify()
         self.assertEqual(x["verdict"], "NOT_ESTABLISHED")
         self.assertFalse(x["execution_authorized"])
-        self.assertTrue(all(c == "PASS" for c in x["checks"].values()))
+        self.assertEqual(x["checks"]["recorded_claim_shape"], "PASS")
+        self.assertEqual(x["checks"]["temporal_relationship"], "NOT_ESTABLISHED")
+        self.assertEqual(x["checks"]["producer_authenticity"], "NOT_ESTABLISHED")
+        self.assertTrue(all(c == "PASS" for k, c in x["checks"].items()
+                            if k not in ("temporal_relationship", "producer_authenticity")))
 
     def test_mismatched_effect_operation(self):
         self.records["effect"]["operation_id"] = "other"
@@ -77,17 +81,47 @@ class EvidenceTests(unittest.TestCase):
 
     def test_nonsense_cutoff_rejected(self):
         self.records["observation"]["cutoff"] = "gibberish"
-        self.assertEqual(self.verify()["checks"]["recorded_status"], "FAIL")
+        self.assertEqual(self.verify()["checks"]["recorded_claim_shape"], "FAIL")
 
     def test_invalid_calendar_cutoff_rejected(self):
         self.records["observation"]["cutoff"] = "2026-02-30T12:00:00Z"
-        self.assertEqual(self.verify()["checks"]["recorded_status"], "FAIL")
+        self.assertEqual(self.verify()["checks"]["recorded_claim_shape"], "FAIL")
 
     def test_fifo_is_denied_without_blocking(self):
         import os
         os.mkfifo(self.root / "fifo.json")
         with self.assertRaises(InvalidEvidence):
             read_regular_nofollow(self.root, "fifo.json")
+
+    def test_unknown_effect_field_rejected(self):
+        self.records["effect"]["approved_by"] = "claim"
+        result = self.verify()
+        self.assertEqual(result["verdict"], "FAIL")
+        self.assertEqual(result["checks"]["file_effect"], "FAIL")
+
+    def test_unknown_observation_field_rejected(self):
+        self.records["observation"]["producer_signature"] = "pretend"
+        self.assertEqual(self.verify()["checks"]["file_observation"], "FAIL")
+
+    def test_ancient_cutoff_never_proves_chronology(self):
+        self.records["observation"]["cutoff"] = "1970-01-01T00:00:00Z"
+        result = self.verify()
+        self.assertEqual(result["checks"]["temporal_relationship"], "NOT_ESTABLISHED")
+        self.assertEqual(result["verdict"], "NOT_ESTABLISHED")
+
+    def test_future_cutoff_never_proves_chronology(self):
+        self.records["observation"]["cutoff"] = "9999-12-31T23:59:59Z"
+        result = self.verify()
+        self.assertEqual(result["checks"]["temporal_relationship"], "NOT_ESTABLISHED")
+
+    def test_forged_self_consistent_bundle_does_not_authenticate(self):
+        self.records["admission"]["operation_id"] = "forged"
+        for name in ("attempt", "effect", "observation"):
+            self.records[name]["operation_id"] = "forged"
+        result = self.verify()
+        self.assertEqual(result["verdict"], "NOT_ESTABLISHED")
+        self.assertFalse(result["execution_authorized"])
+        self.assertEqual(result["checks"]["producer_authenticity"], "NOT_ESTABLISHED")
 
     def test_bool_equals_integer_is_rejected(self):
         self.assertFalse(exact_args(ARGS, dict(ARGS, amount_minor=True)))
