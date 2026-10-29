@@ -11,4 +11,4 @@ d29abcb5af552c3cf236c7e47d9026963202bfa2f3670ce13f9543d5731a87b3  capsules/aps-p
 fb3504568c1ce2f9e65c1739c13fad8343da24b8bc5fb7a8b59a6570de84f25e  capsules/aps-priorseal-v0.1/adapter/package.json
 777232374359376dfb851dbe474b7e37670cab615a941147b80239022118f927  capsules/aps-priorseal-v0.1/adapter/verify.mjs
 a2412c91e15614e6389f0b3bbf967df25035931f12229880e92d39720c9b03d0  capsules/aps-priorseal-v0.1/artifacts/README.md
-28594cd2dc584beeb2d62818494282dd73c83190a997a6b29680db2b33201e37  capsules/aps-priorseal-v0.1/run-pinned.sh
+bdb86f5e4319f91a268470676ea6d92627860e1c96dd2ed9013db3ff7bc73f1f  capsules/aps-priorseal-v0.1/run-pinned.sh

@@ -53,13 +53,13 @@ printf 'review_commit=%s\nadapter_sha256=%s\naps_commit=%s\npriorseal_commit=%s\
   "$actual" "$adapter_sha" "$aps_actual" "$priorseal_actual" > "$meta_file"
 
 cd "$capsule/adapter" || exit 2
-npm ci --ignore-scripts --no-audit --no-fund
-npm run selftest
+npm ci --ignore-scripts --no-audit --no-fund || exit "$?"
+npm run selftest || exit "$?"
 node verify.mjs \
   --aps-owner "$aps_repo/fixtures/priorseal-decision-binding" \
   --aps "$priorseal_repo/examples/aps-priorseal-decision-binding-v1/aps-inputs" \
   --priorseal "$priorseal_repo/examples/aps-priorseal-decision-binding-v1" \
-  --out "$report_file"
+  --out "$report_file" || exit "$?"
 
 trap - EXIT
 printf '0\n' > "$status_file"
